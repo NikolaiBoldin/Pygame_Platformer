@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="80" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="42">
+ <tileset firstgid="1" name="background3" tilewidth="32" tileheight="32" tilecount="1728" columns="48">
+  <image source="../tiles/background3.png" width="1536" height="1152"/>
+ </tileset>
+ <tileset firstgid="1729" name="middleground2" tilewidth="32" tileheight="32" tilecount="972" columns="36">
+  <image source="../tiles/middleground2.png" width="1152" height="864"/>
+ </tileset>
+ <tileset firstgid="2701" name="tileset2" tilewidth="32" tileheight="32" tilecount="444" columns="37">
+  <image source="../tiles/tileset2.png" width="1184" height="384"/>
+ </tileset>
+ <layer id="5" name="Слой тайлов 1" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer id="6" name="Слой тайлов 2" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer id="7" name="Слой тайлов 3" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   eAHt1UkrhVEcx/HTNWUqYmFtSIb3Q+IdiLKRYsELMGQq5B1YGZJhS6xkhZsxZMVClobvKf96nsdzoruR63fq27nP31D309/lnI4EJCABCUhAAhKQgAQkIAEJSEACEpCABCQgAQlIQAISkIAEJCABCUhAAhKQgAQkIAEJSEACEpCABCQgAQlIQAISkIAEJCABCfy2wHiZcxM0SVM0HWiW+RzpxAVWMVmjddqgzUBbzLdJJy5wgskpnVGWzgNdMr8inbjAKyZv9O5typ3LBCpkXkQ6cYF6TBqokZqoOVAL81bSiQv0YpL9rJ97ngYS+dkQ6XwVmMLF/GYSbt5xh7/rXVqW31c8JrZ/ffj4/bPdsz28xu6GtH+pfM72bxo7v3/mZo7FzEpI+5ful7Z/ZriCWxu10yDZ6eB1J3Ul6ua5h/7TSe6f7d0RDse0QIu0RHaGeT0Sebb5KLOxlLl9PR9v+98R/fzzdi/kLW0Xo59/e8z3KXlC8+T35dOz+dnn3zMuZme76O/o51/IKTTPJ6/kezG/c4wuqK7CuWvuG7qlO7qnB7ITcgrN7ef+yn3Aez2kn9wOL1+GCqiQiqmESqmMyqmS7PdV8bo68vzd3L7+V+5H7J5Id24ONexGLenOzeEDTj7+ag==
+  </data>
+ </layer>
+ <objectgroup color="#00ff00" id="2" name="Blocking">
+  <object id="8" x="0" y="0" width="1" height="1920">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="9" x="0" y="1920" width="2560" height="1">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="10" x="0" y="0" width="2560" height="1">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="11" x="2560" y="0" width="1" height="1920">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="13" name="Земля" x="0" y="1856" width="2560" height="64">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="32" x="480" y="1796" width="20" height="24">
+   <properties>
+    <property name="blockers" value="t"/>
+   </properties>
+  </object>
+  <object id="41" x="489" y="1781" width="22" height="25.5"/>
+ </objectgroup>
+ <objectgroup color="#aa55ff" id="3" name="Spawn">
+  <object id="6" x="64" y="1600" width="32" height="32">
+   <properties>
+    <property name="player" value="yes"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
