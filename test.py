@@ -2,6 +2,7 @@ import pygame
 import sys
 import os
 import data.maps.tmx as tmx
+from pygame import *
 
 
 # class Enemy(pygame.sprite.Sprite):
@@ -47,30 +48,39 @@ import data.maps.tmx as tmx
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, location, *groups):
-        super(Player, self).__init__(*groups)
+        super().__init__(*groups)
         # self.image = pygame.image.load(os.path.join('data/sprites/Witch', 'Witch2.png'))
-        self.image = pygame.transform.scale(pygame.image.load(os.path.join('data/sprites/Witch', 'Witch.png')),
-                                            (64, 64))
+        self.image = (pygame.image.load(os.path.join('data/sprites/Witch', 'Witch.png')))
         self.right_image = self.image
         self.left_image = pygame.transform.flip(self.image, True, False)
+        X, Y = location
+        x, y = self.image.get_size()
         self.rect = pygame.rect.Rect(location, self.image.get_size())
+        self.masc = pygame.rect.Rect((X + 23, Y + 15), (x - 46, y - 15))
         self.resting = False
         self.dy = 0
         self.is_dead = False
         self.direction = 1
         self.gun_cooldown = 0
-        print(1)
 
     def update(self, dt, game):
+
         last = self.rect.copy()
+        last_masc = self.masc.copy()
 
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
-            self.rect.x -= 300 * dt
+            # self.rect.x -= 300 * dt
+            # self.masc.x -= 300 * dt
+            self.rect.x -= 5
+            self.masc.x -= 5
             self.image = self.left_image
             self.direction = -1
         if key[pygame.K_RIGHT]:
-            self.rect.x += 300 * dt
+            # self.rect.x += 300 * dt
+            # self.masc.x += 300 * dt
+            self.rect.x += 5
+            self.masc.x += 5
             self.image = self.right_image
             self.direction = 1
 
@@ -88,21 +98,27 @@ class Player(pygame.sprite.Sprite):
         self.dy = min(400, self.dy + 40)
 
         self.rect.y += self.dy * dt
+        self.masc.y += self.dy * dt
 
         new = self.rect
+        new_masc = self.masc
         self.resting = False
-        for cell in game.tile_map.layers['Blocking'].collide(new, 'blockers'):
+        for cell in game.tile_map.layers['Blocking'].collide(new_masc, 'blockers'):
             blockers = cell['blockers']
-            if 'l' in blockers and last.right <= cell.left < new.right:
-                new.right = cell.left
-            if 'r' in blockers and last.left >= cell.right > new.left:
-                new.left = cell.right
-            if 't' in blockers and last.bottom <= cell.top < new.bottom:
+            if 'l' in blockers and last_masc.right <= cell.left < new_masc.right:
+                new.right = cell.left+23
+                new_masc.right = cell.left
+            if 'r' in blockers and last_masc.left >= cell.right > new_masc.left:
+                new.left = cell.right-23
+                new_masc.left = cell.right
+            if 't' in blockers and last_masc.bottom <= cell.top < new_masc.bottom:
                 self.resting = True
                 new.bottom = cell.top
+                new_masc.bottom = cell.top
                 self.dy = 0
-            if 'b' in blockers and last.top >= cell.bottom > new.top:
-                new.top = cell.bottom
+            if 'b' in blockers and last_masc.top >= cell.bottom > new_masc.top:
+                new.top = cell.bottom-15
+                new_masc.top = cell.bottom
                 self.dy = 0
 
         game.tile_map.set_focus(new.x, new.y)
@@ -114,6 +130,7 @@ class Game:
         self.sprites = tmx.SpriteLayer()
         self.player = None
         self.enemies = tmx.SpriteLayer()
+        self.fps = 60
 
     def main(self, screen):
         clock = pygame.time.Clock()
@@ -132,8 +149,9 @@ class Game:
         # self.tile_map.layers.append(self.enemies)
 
         while 1:
-            dt = clock.tick(60)
-
+            dt = clock.tick(self.fps)
+            # print(dt)
+            # clock.tick(self.fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return
@@ -146,6 +164,7 @@ class Game:
             self.tile_map.draw(screen)
 
             pygame.display.flip()
+            pygame.display.update()
 
             # if self.player.is_dead:
             #     print('YOU DIED')
