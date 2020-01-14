@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="59">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="60" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="64">
  <tileset firstgid="1" name="background3" tilewidth="32" tileheight="32" tilecount="1728" columns="48">
   <image source="../tiles/background3.png" width="1536" height="1152"/>
  </tileset>
@@ -24,6 +24,13 @@
    eAHtlFsrRGEUhr/GMJmhiAvXDsnh/5D4B6LcSHHBD8A0DoX8A1cOyeGWuJIrhxxmQq64kEuH56tZtdrNxg3Ze9aqp7W+d/bs9vuu2eOclSVgCVgCloAlYAlYApaAJWAJWAKWgCVgCVgClkBcE5hOOzcDs5CFXAjz6AsQ9VrHwwZswhZsh7CDvgtRrzM8nMMFXMJVCDfotxD1esPDO3x4LxnnEiEk0Ssh6tWMhxZohTZoD6EDvROiXoN4uCwyTF+EkQBeG4M4VBYf4ncu4NP73uN3vg+rMfEr+x3Cj9+v7Fb2nMdrAeK23xxe/X7Fp/iuQktBnPcrntfw2QXdMApSPcy90Begn/MA/OeS91f2K3s94blPYQmWYQWkxpkn1Fn0SbSpoh7M5L9kIf9V+v31Xl/Be5dd6/f3AP0QgqX1YCZhWfx1DuJX9vuCD/Equ/Zdv7/al/asdT37a/RZZ1Eqh9/MQPxe4ekammqcy9MLcAf38ACPIKWfXTTfta7nrz7T10kOOgN9/7D5iGc7hp90hz9PAiogCVWQgmpIQwZqQe5Xx1yvzqV0uUaeQ59l9t+T2V8ns3S573f9ie8+Q7n0BrJvhHLpn7Ma5XE=
   </data>
  </layer>
+ <objectgroup id="9" name="Triggers">
+  <object id="62" x="832" y="832" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup color="#00ff00" id="2" name="Blocking" visible="0">
   <object id="8" x="0" y="0.757576" width="1" height="1151.24">
    <properties>
@@ -107,7 +114,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#aa55ff" id="3" name="Spawn">
-  <object id="6" name="spawn" x="32" y="960" width="32" height="32">
+  <object id="6" name="spawn" x="96" y="64" width="32" height="32">
    <properties>
     <property name="player" value="yes"/>
    </properties>
