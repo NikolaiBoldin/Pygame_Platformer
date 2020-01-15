@@ -9,4 +9,4 @@ def resize(filename1, filename2, zoom):
     pygame.image.save(image, filename2)
 
 
-resize('data/sprites/Health Bar/Health.png', 'data/sprites/Health Bar/Health.png',0.5)
+resize('data/sprites/Witch/Witch Sprite Sheet.png', 'data/sprites/Witch/Witch Sprite Sheet.png',2)

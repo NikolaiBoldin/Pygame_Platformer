@@ -5,6 +5,29 @@ import data.maps.tmx as tmx
 from pygame import *
 
 
+def load_image(name, color_key=None):
+    fullname = os.path.join('data', name)
+    try:
+        image = pygame.image.load(fullname)
+    except pygame.error as message:
+        print('Не удаётся загрузить:', name)
+        raise SystemExit(message)
+    image = image.convert_alpha()
+    if color_key is not None:
+        if color_key == -1:
+            color_key = image.get_at((0, 0))
+        image.set_colorkey(color_key)
+    return image
+
+
+def get_list_sprites(sheet, line, count_frames, x, y):
+    list_frames = []
+    for i in range(count_frames):
+        list_frames.append(sheet.subsurface(pygame.Rect(
+            (x * i, y * line), (x, y))))
+    return list_frames
+
+
 class Enemy(pygame.sprite.Sprite):
     image = pygame.image.load(os.path.join('data/sprites/', 'Skeleton.png'))
 
@@ -24,7 +47,6 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.left = cell.right
             self.direction *= -1
             break
-
 
 
 # class Bullet(pygame.sprite.Sprite):
@@ -50,10 +72,27 @@ class Enemy(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self, location, *groups):
         super().__init__(*groups)
-        # self.image = pygame.image.load(os.path.join('data/sprites/Witch', 'Witch2.png'))
-        self.image = (pygame.image.load(os.path.join('data/sprites/Witch', 'Witch.png')))
-        self.right_image = self.image
-        self.left_image = pygame.transform.flip(self.image, True, False)
+        # анимация
+        self.SpriteSheet = load_image('sprites/Witch/Witch Sprite Sheet.png')
+        self.frames_right = {'idle': get_list_sprites(self.SpriteSheet, 0, 4, 64, 64),
+                             'move': get_list_sprites(self.SpriteSheet, 1, 8, 64, 64),
+                             'spell': get_list_sprites(self.SpriteSheet, 2, 8, 64, 64),
+                             'damage': get_list_sprites(self.SpriteSheet, 3, 4, 64, 64),
+                             'death': get_list_sprites(self.SpriteSheet, 4, 8, 64, 64),
+                             'flight': get_list_sprites(self.SpriteSheet, 5, 4, 64, 64)}
+        self.frames_left = {'idle': list(map(lambda im: transform.flip(im, True, False), self.frames_right['idle'])),
+                            'move': list(map(lambda im: transform.flip(im, True, False), self.frames_right['move'])),
+                            'spell': list(map(lambda im: transform.flip(im, True, False), self.frames_right['spell'])),
+                            'damage': list(map(lambda im: transform.flip(im, True, False), self.frames_right['damage'])),
+                            'death': list(map(lambda im: transform.flip(im, True, False), self.frames_right['death'])),
+                            'flight': list(map(lambda im: transform.flip(im, True, False), self.frames_right['flight']))}
+        self.image = self.frames_right['idle'][0]
+        self.update_rate = 0.1  # скорость обновления анимации в секунадх
+        self.timer_of_update = 0  # таймер обновлений
+        self.frame_number_idle = 0
+        self.frame_number_move = 0
+        self.is_move = False
+
         X, Y = location
         x, y = self.image.get_size()
         self.rect = pygame.rect.Rect(location, self.image.get_size())
@@ -76,27 +115,64 @@ class Player(pygame.sprite.Sprite):
 
         self.mask = pygame.mask.from_surface(self.image)
 
+    def set_frame(self, dt):
+        self.timer_of_update += dt
+        if self.is_move:
+            if self.timer_of_update >= self.update_rate:
+                if self.direction == 1:
+                    self.image = self.frames_right['move'][self.frame_number_move]
+                    self.frame_number_move = (self.frame_number_move + 1) % len(self.frames_right['move'])
+                    self.timer_of_update = 0
+                else:
+                    self.image = self.frames_left['move'][self.frame_number_move]
+                    self.frame_number_move = (self.frame_number_move + 1) % len(self.frames_left['move'])
+                    self.timer_of_update = 0
+        else:
+            if self.timer_of_update >= self.update_rate:
+                if self.direction == 1:
+                    self.image = self.frames_right['idle'][self.frame_number_idle]
+                    self.frame_number_idle = (self.frame_number_idle + 1) % len(self.frames_right['idle'])
+                    self.timer_of_update = 0
+                else:
+                    self.image = self.frames_left['idle'][self.frame_number_idle]
+                    self.frame_number_idle = (self.frame_number_idle + 1) % len(self.frames_left['idle'])
+                    self.timer_of_update = 0
+        # if self.timer_of_update >= self.update_rate:
+        #     self.timer_of_update = 0
+        #     self.frame_number = (self.frame_number + 1) % 4
+        #     self.image = self.frames_right['idle'][self.frame_number]
+
     def gravity(self):
         # Событие начала прыжка игрока
         self.jumpforce = 15
         self.gravityforce = 0
 
     def update(self, dt, game):
-
         last_masc = self.mask_for_platform.copy()
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
+
+        if keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.rect.x -= 7
             self.mask_for_platform.x -= 7
-            self.image = self.left_image
+            if not self.is_move:
+                self.is_move = True
+                self.timer_of_update = 0
+                self.frame_number_idle = 0
             self.direction = -1
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
             self.rect.x += 7
             self.mask_for_platform.x += 7
-            self.image = self.right_image
+            if not self.is_move:
+                self.is_move = True
+                self.timer_of_update = 0
+                self.frame_number_idle = 0
             self.direction = 1
-
+        if (not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]) or (keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]):
+            self.is_move = False
+            self.frame_number_move = 0
+        # print(self.is_move)
+        self.set_frame(dt)
         # if keys[pygame.K_LSHIFT] and not self.gun_cooldown:
         #     if self.direction > 0:
         #         Bullet(self.rect.midright, 1, game.sprites)
@@ -107,7 +183,7 @@ class Player(pygame.sprite.Sprite):
         self.gun_cooldown = max(0, self.gun_cooldown - dt)
 
         if self.on_the_ground:
-            if key[pygame.K_SPACE]:  # прыжок
+            if keys[pygame.K_SPACE]:  # прыжок
                 self.gravity()
                 self.on_the_ground = False
         if not self.on_the_ground:
@@ -222,21 +298,6 @@ class Game:
             # if self.player.is_dead:
             #     print('YOU DIED')
             #     return
-
-
-def load_image(name, color_key=None):
-    fullname = os.path.join('data', name)
-    try:
-        image = pygame.image.load(fullname)
-    except pygame.error as message:
-        print('Не удаётся загрузить:', name)
-        raise SystemExit(message)
-    image = image.convert_alpha()
-    if color_key is not None:
-        if color_key == -1:
-            color_key = image.get_at((0, 0))
-        image.set_colorkey(color_key)
-    return image
 
 
 def load_map(name):

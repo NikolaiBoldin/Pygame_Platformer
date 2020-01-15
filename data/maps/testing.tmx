@@ -133,8 +133,8 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#aa55ff" id="3" name="Spawn" visible="0">
-  <object id="6" name="spawn" x="96" y="448" width="32" height="32">
+ <objectgroup color="#aa55ff" id="3" name="Spawn">
+  <object id="6" name="spawn" x="64" y="992" width="32" height="32">
    <properties>
     <property name="player" value="yes"/>
    </properties>
