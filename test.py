@@ -9,21 +9,22 @@ class Enemy(pygame.sprite.Sprite):
     image = pygame.image.load(os.path.join('data/sprites/', 'Skeleton.png'))
 
     def __init__(self, location, *groups):
-        super(Enemy, self).__init__(*groups)
+        super().__init__(*groups)
+        self.image = Enemy.image
         self.rect = pygame.rect.Rect(location, self.image.get_size())
         self.direction = 1
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, dt, game):
-        self.rect.x += self.direction * 100 * dt
+        self.rect.x += self.direction * 2
         for cell in game.tile_map.layers['Triggers'].collide(self.rect, 'reverse'):
-            if self.direction > 0:
+            if self.direction == 1:
                 self.rect.right = cell.left
             else:
                 self.rect.left = cell.right
             self.direction *= -1
             break
-        if self.rect.colliderect(game.player.rect):
-            game.player.is_dead = True
+
 
 
 # class Bullet(pygame.sprite.Sprite):
@@ -56,15 +57,24 @@ class Player(pygame.sprite.Sprite):
         X, Y = location
         x, y = self.image.get_size()
         self.rect = pygame.rect.Rect(location, self.image.get_size())
-        self.masc = pygame.rect.Rect((X + 23, Y + 15), (x - 46, y - 15))
+        self.mask_for_platform = pygame.rect.Rect((X + 23, Y + 15), (x - 46, y - 15))  # маска для корректного падения
         self.on_the_ground = False  # находится ли персонаж на земле
         self.is_dead = False
         self.direction = 1  # направление персонажа: 1 -> право, -1 -> лево
         self.gun_cooldown = 0
-
+        # характеристики
+        self.HP = 100
+        self.max_HP = 100
+        self.mana = 100
+        self.max_mana = 100
+        self.stamina = 100
+        self.max_stamina = 100
+        # физика
         self.jumpforce = 0  # сила прыжка
         self.gravityforce = 0  # сила гравитации
         self.maxgravityforce = 50  # сила максимальная сила гравитации
+
+        self.mask = pygame.mask.from_surface(self.image)
 
     def gravity(self):
         # Событие начала прыжка игрока
@@ -73,26 +83,21 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, dt, game):
 
-        last = self.rect.copy()
-        last_masc = self.masc.copy()
+        last_masc = self.mask_for_platform.copy()
 
-        key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]:
-            self.rect.x -= 300 * dt
-            self.masc.x -= 300 * dt
-            # self.rect.x -= 15
-            # self.masc.x -= 15
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= 7
+            self.mask_for_platform.x -= 7
             self.image = self.left_image
             self.direction = -1
-        if key[pygame.K_RIGHT]:
-            self.rect.x += 300 * dt
-            self.masc.x += 300 * dt
-            # self.rect.x +=15
-            # self.masc.x += 15
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += 7
+            self.mask_for_platform.x += 7
             self.image = self.right_image
             self.direction = 1
 
-        # if key[pygame.K_LSHIFT] and not self.gun_cooldown:
+        # if keys[pygame.K_LSHIFT] and not self.gun_cooldown:
         #     if self.direction > 0:
         #         Bullet(self.rect.midright, 1, game.sprites)
         #     else:
@@ -112,11 +117,11 @@ class Player(pygame.sprite.Sprite):
                 self.gravityforce += 1
             self.rect.y -= self.jumpforce
             self.rect.y += self.gravityforce
-            self.masc.y -= self.jumpforce
-            self.masc.y += self.gravityforce
+            self.mask_for_platform.y -= self.jumpforce
+            self.mask_for_platform.y += self.gravityforce
 
         new = self.rect
-        new_masc = self.masc
+        new_masc = self.mask_for_platform
         self.on_the_ground = False
         for cell in game.tile_map.layers['Blocking'].collide(new_masc, 'blockers'):
             blockers = cell['blockers']
@@ -133,10 +138,16 @@ class Player(pygame.sprite.Sprite):
                 new.bottom = cell.top
                 new_masc.bottom = cell.top
             if 'b' in blockers and last_masc.top >= cell.bottom > new_masc.top:
+                self.gravityforce = self.jumpforce
                 new.top = cell.bottom - 15
                 new_masc.top = cell.bottom
 
-        game.tile_map.set_focus(new.x, new.y)
+        for enemy in sprite.spritecollide(self, game.enemies, False):
+            if pygame.sprite.collide_mask(self, enemy):
+                if self.HP > 0:
+                    self.HP -= 0.5
+
+        game.tile_map.set_focus(new.x, new.y)  # камера
 
 
 class Game:
@@ -146,16 +157,31 @@ class Game:
         self.player = None
         self.enemies = tmx.SpriteLayer()
         self.fps = 60
+        # загрузака полос: здоровья, маны и выносливости
+        self.HealthBar = load_image('sprites/Health Bar/Health.png')
+        self.ManaBar = load_image('sprites/Health Bar/Mana.png')
+        self.StaminaBar = load_image('sprites/Health Bar/Stamina.png')
+        self.BG_Bar = load_image('sprites/Health Bar/BG bar.png')
+        # координаты полос
+        self.size_bar = self.HealthBar.get_size()
+        self.coord_BG_Bar1 = (3, 3)
+        self.coord_BG_Bar2 = (3, 38)
+        self.coord_BG_Bar3 = (3, 73)
+        self.coord_HealthBar = (7, 7)
+        self.coord_ManaBar = (7, 42)
+        self.coord_StaminaBar = (7, 77)
+        # смещение полос
+        self.offset_health = 0
+        self.offset_mana = 0
+        self.offset_stamina = 0
 
     def main(self, screen):
         clock = pygame.time.Clock()
 
-        # background = pygame.image.load('background.png')
-
         self.tile_map = load_map('testing.tmx')
 
         start_cell = self.tile_map.layers['Spawn'].find('player')[0]
-        # print((start_cell.px, start_cell.py))
+
         self.player = Player((start_cell.px, start_cell.py), self.sprites)
         self.tile_map.layers.append(self.sprites)
 
@@ -164,7 +190,7 @@ class Game:
         self.tile_map.layers.append(self.enemies)
 
         while 1:
-            dt = clock.tick(self.fps)
+            dt = clock.tick(self.fps)  # задержка игрового цикла
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -172,11 +198,24 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
 
-            self.tile_map.update(dt / 1000, self)
-            # screen.blit(background, (0, 0))
-            screen.fill(pygame.Color("black"))
-            self.tile_map.draw(screen)
-
+            self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
+            screen.fill(Color("black"))
+            self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
+            # смещение полос
+            self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
+            self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.mana / self.player.max_mana)
+            self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (self.player.stamina / self.player.max_stamina)
+            # отрисовка полос
+            display.blit(self.BG_Bar, self.coord_BG_Bar1)
+            display.blit(self.BG_Bar, self.coord_BG_Bar2)
+            display.blit(self.BG_Bar, self.coord_BG_Bar3)
+            display.blit(self.HealthBar, self.coord_HealthBar,
+                         ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
+            display.blit(self.ManaBar, self.coord_ManaBar,
+                         ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
+            display.blit(self.StaminaBar, self.coord_StaminaBar,
+                         ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+            # обновление экрана
             pygame.display.flip()
             pygame.display.update()
 
