@@ -47,7 +47,7 @@
     <property name="blockers" value="tblr"/>
    </properties>
   </object>
-  <object id="32" x="480.037" y="1032.06" width="11.9289" height="24">
+  <object id="32" x="480.037" y="1032.06" width="12.0811" height="24">
    <properties>
     <property name="blockers" value="t"/>
    </properties>
@@ -133,8 +133,8 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#aa55ff" id="3" name="Spawn" visible="0">
-  <object id="6" name="spawn" x="96" y="448" width="32" height="32">
+ <objectgroup color="#aa55ff" id="3" name="Spawn">
+  <object id="6" name="spawn" x="64" y="992" width="32" height="32">
    <properties>
     <property name="player" value="yes"/>
    </properties>

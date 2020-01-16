@@ -1,5 +1,6 @@
 # Изменение разрешения картинки в N раз
 import pygame
+import os
 
 
 def resize(filename1, filename2, zoom):
@@ -9,4 +10,4 @@ def resize(filename1, filename2, zoom):
     pygame.image.save(image, filename2)
 
 
-resize('data/sprites/Health Bar/Health.png', 'data/sprites/Health Bar/Health.png',0.5)
+
