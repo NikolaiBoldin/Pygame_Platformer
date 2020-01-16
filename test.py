@@ -227,6 +227,34 @@ class Player(pygame.sprite.Sprite):
         self.gravityforce = 0
 
     def update(self, dt, game):
+<<<<<<< HEAD
+
+        last_masc = self.mask_for_platform.copy()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= 7
+            self.mask_for_platform.x -= 7
+            self.image = self.left_image
+            self.direction = -1
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += 7
+            self.mask_for_platform.x += 7
+            self.image = self.right_image
+            self.direction = 1
+
+        # if keys[pygame.K_LSHIFT] and not self.gun_cooldown:
+        #     if self.direction > 0:
+        #         Bullet(self.rect.midright, 1, game.sprites)
+        #     else:
+        #         Bullet(self.rect.midleft, -1, game.sprites)
+        #     self.gun_cooldown = 1
+
+        self.gun_cooldown = max(0, self.gun_cooldown - dt)
+
+        if self.on_the_ground:
+            if keys[pygame.K_SPACE]:  # прыжок
+=======
         if not self.is_dead or self.is_stun:
             last_masc = self.mask_for_platform.copy()
 
@@ -266,6 +294,7 @@ class Player(pygame.sprite.Sprite):
 
             # прыжок
             if self.on_the_ground and keys[pygame.K_SPACE] and not self.is_stun and not self.is_SpellCast:
+>>>>>>> origin/develop
                 self.gravity()
                 self.on_the_ground = False
                 self.is_jump = True
@@ -404,6 +433,8 @@ class Game:
         self.offset_health = 0
         self.offset_mana = 0
         self.offset_stamina = 0
+        self.flag = True
+        self.start_game = True
 
         self.flag = True
         self.start_game = True
@@ -430,6 +461,26 @@ class Game:
                     return
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
+<<<<<<< HEAD
+
+            self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
+            screen.fill(Color("black"))
+            self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
+            # смещение полос
+            self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
+            self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.mana / self.player.max_mana)
+            self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (self.player.stamina / self.player.max_stamina)
+            # отрисовка полос
+            screen.blit(self.BG_Bar, self.coord_BG_Bar1)
+            screen.blit(self.BG_Bar, self.coord_BG_Bar2)
+            screen.blit(self.BG_Bar, self.coord_BG_Bar3)
+            screen.blit(self.HealthBar, self.coord_HealthBar,
+                         ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
+            screen.blit(self.ManaBar, self.coord_ManaBar,
+                         ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
+            screen.blit(self.StaminaBar, self.coord_StaminaBar,
+                         ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+=======
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.player.left_MouseButton = True
             if not self.player.is_GameOver:
@@ -457,6 +508,7 @@ class Game:
                     s = pygame.Surface((800, 600), pygame.SRCALPHA)  # per-pixel alpha
                     s.fill((0, 0, 0, 128))  # notice the alpha value in the color
                     display.blit(s, (0, 0))
+>>>>>>> origin/develop
             # обновление экрана
             pygame.display.flip()
             pygame.display.update()
@@ -588,4 +640,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(screen_size)
     FPS = 50
     clock = pygame.time.Clock()
+<<<<<<< HEAD
     Game().start_screen1(screen)
+=======
+    Game().start_screen1(screen)
+
+>>>>>>> origin/main_menu
