@@ -47,7 +47,7 @@
     <property name="blockers" value="tblr"/>
    </properties>
   </object>
-  <object id="32" x="480.037" y="1032.06" width="11.9289" height="24">
+  <object id="32" x="480.037" y="1032.06" width="12.0811" height="24">
    <properties>
     <property name="blockers" value="t"/>
    </properties>
