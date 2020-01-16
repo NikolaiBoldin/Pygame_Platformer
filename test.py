@@ -26,7 +26,6 @@ class Enemy(pygame.sprite.Sprite):
             break
 
 
-
 # class Bullet(pygame.sprite.Sprite):
 #     image = pygame.image.load('bullet.png')
 #
@@ -46,6 +45,21 @@ class Enemy(pygame.sprite.Sprite):
 #         if pygame.sprite.spritecollide(self, game.enemies, True):
 #             self.kill()
 
+# добавление музыки
+pygame.init()
+pygame.mixer.music.load('data/soundtracks/m_bg1.mp3')
+pygame.mixer_music.set_volume(0.2)
+pygame.mixer.music.play(-1)
+
+jumpsound = pygame.mixer.Sound('data/soundtracks/gruntJumpFemale.wav')
+runsound = pygame.mixer.Sound('data/soundtracks/footstepsTurn.wav')
+enemypunch = pygame.mixer.Sound('data/soundtracks/wooosh.wav')
+# takedamage = pygame.mixer.Sound('data/soundtracks/splatFemale.wav')
+jumpsound.set_volume(0.1)
+runsound.set_volume(0.1)
+
+
+# takedamage.set_volume(0.08)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, location, *groups):
@@ -91,12 +105,13 @@ class Player(pygame.sprite.Sprite):
             self.mask_for_platform.x -= 7
             self.image = self.left_image
             self.direction = -1
+            runsound.play()
         if keys[pygame.K_RIGHT]:
             self.rect.x += 7
             self.mask_for_platform.x += 7
             self.image = self.right_image
             self.direction = 1
-
+            runsound.play()
         # if keys[pygame.K_LSHIFT] and not self.gun_cooldown:
         #     if self.direction > 0:
         #         Bullet(self.rect.midright, 1, game.sprites)
@@ -107,7 +122,10 @@ class Player(pygame.sprite.Sprite):
         self.gun_cooldown = max(0, self.gun_cooldown - dt)
 
         if self.on_the_ground:
-            if key[pygame.K_SPACE]:  # прыжок
+            if keys[pygame.K_SPACE]:  # прыжок
+                runsound.stop()
+                jumpsound.play()
+
                 self.gravity()
                 self.on_the_ground = False
         if not self.on_the_ground:
@@ -144,8 +162,10 @@ class Player(pygame.sprite.Sprite):
 
         for enemy in sprite.spritecollide(self, game.enemies, False):
             if pygame.sprite.collide_mask(self, enemy):
+                enemypunch.play()
                 if self.HP > 0:
                     self.HP -= 0.5
+                    # takedamage.play()
 
         game.tile_map.set_focus(new.x, new.y)  # камера
 
@@ -215,6 +235,7 @@ class Game:
                          ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
             display.blit(self.StaminaBar, self.coord_StaminaBar,
                          ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+
             # обновление экрана
             pygame.display.flip()
             pygame.display.update()
