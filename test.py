@@ -50,18 +50,20 @@ class Enemy(pygame.sprite.Sprite):
             self.direction *= -1
             break
 
+
 pygame.init()
-pygame.mixer.music.load('data/soundtracks/m_bg1.mp3') # фоновая музыка
+pygame.mixer.music.load('data/soundtracks/m_bg1.mp3')  # фоновая музыка
 pygame.mixer_music.set_volume(0.2)
 pygame.mixer.music.play(-1)
 
-jumpsound = pygame.mixer.Sound('data/soundtracks/gruntJumpFemale.wav') # звук прыжка
-runsound = pygame.mixer.Sound('data/soundtracks/footstepsTurn.wav') # звук бега
-enemypunch = pygame.mixer.Sound('data/soundtracks/wooosh.wav') # звук удара врага
-takedamage = pygame.mixer.Sound('data/soundtracks/splatFemale.wav') # звук получения урона
+jumpsound = pygame.mixer.Sound('data/soundtracks/gruntJumpFemale.wav')  # звук прыжка
+runsound = pygame.mixer.Sound('data/soundtracks/footstepsTurn.wav')  # звук бега
+enemypunch = pygame.mixer.Sound('data/soundtracks/wooosh.wav')  # звук удара врага
+takedamage = pygame.mixer.Sound('data/soundtracks/splatFemale.wav')  # звук получения урона
 jumpsound.set_volume(0.1)
 runsound.set_volume(0.1)
 takedamage.set_volume(0.3)
+
 
 # class Bullet(pygame.sprite.Sprite):
 #     image = pygame.image.load('bullet.png')
@@ -227,7 +229,6 @@ class Player(pygame.sprite.Sprite):
         self.gravityforce = 0
 
     def update(self, dt, game):
-<<<<<<< HEAD
 
         last_masc = self.mask_for_platform.copy()
 
@@ -254,7 +255,6 @@ class Player(pygame.sprite.Sprite):
 
         if self.on_the_ground:
             if keys[pygame.K_SPACE]:  # прыжок
-=======
         if not self.is_dead or self.is_stun:
             last_masc = self.mask_for_platform.copy()
 
@@ -294,7 +294,7 @@ class Player(pygame.sprite.Sprite):
 
             # прыжок
             if self.on_the_ground and keys[pygame.K_SPACE] and not self.is_stun and not self.is_SpellCast:
->>>>>>> origin/develop
+
                 self.gravity()
                 self.on_the_ground = False
                 self.is_jump = True
@@ -469,7 +469,6 @@ class Game:
                     return
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
-<<<<<<< HEAD
 
             self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
             screen.fill(Color("black"))
@@ -483,170 +482,176 @@ class Game:
             screen.blit(self.BG_Bar, self.coord_BG_Bar2)
             screen.blit(self.BG_Bar, self.coord_BG_Bar3)
             screen.blit(self.HealthBar, self.coord_HealthBar,
-                         ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
+                        ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
             screen.blit(self.ManaBar, self.coord_ManaBar,
-                         ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
+                        ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
             screen.blit(self.StaminaBar, self.coord_StaminaBar,
-                         ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
-=======
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    self.player.left_MouseButton = True
-            if not self.player.is_GameOver:
-                self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
-                screen.fill(Color("black"))
-                self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
-                # смещение полос
-                self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
-                self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.mana / self.player.max_mana)
-                self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (
-                        self.player.stamina / self.player.max_stamina)
-                # отрисовка полос
-                screen.blit(self.BG_Bar, self.coord_BG_Bar1)
-                screen.blit(self.BG_Bar, self.coord_BG_Bar2)
-                screen.blit(self.BG_Bar, self.coord_BG_Bar3)
-                screen.blit(self.HealthBar, self.coord_HealthBar,
-                             ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
-                screen.blit(self.ManaBar, self.coord_ManaBar,
-                             ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
-                screen.blit(self.StaminaBar, self.coord_StaminaBar,
-                             ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
-            else:
-                if not self.is_GameOver:
-                    self.is_GameOver = True
-                    s = pygame.Surface((800, 600), pygame.SRCALPHA)  # per-pixel alpha
-                    s.fill((0, 0, 0, 128))  # notice the alpha value in the color
-                    display.blit(s, (0, 0))
->>>>>>> origin/develop
-            # обновление экрана
-            pygame.display.flip()
-            pygame.display.update()
+                        ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
 
-            # if self.player.is_dead:
-            #     print('YOU DIED')
-            #     return
-
-    def terminate(self):
-        pygame.quit()
-        sys.exit()
-
-    def action1(self):
-        self.flag = False
-
-    def action2(self):
-        self.start_game = False
-
-    def button_control(self, x, y, width_b, height_b, screen):
-        mouse = pygame.mouse.get_pos()
-        click_mouse = pygame.mouse.get_pressed()
-
-        if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
-            pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
-            if click_mouse[0] == 1:
-                action()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                self.player.left_MouseButton = True
+        if not self.player.is_GameOver:
+            self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
+            screen.fill(Color("black"))
+            self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
+            # смещение полос
+            self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
+            self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.mana / self.player.max_mana)
+            self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (
+                    self.player.stamina / self.player.max_stamina)
+            # отрисовка полос
+            screen.blit(self.BG_Bar, self.coord_BG_Bar1)
+            screen.blit(self.BG_Bar, self.coord_BG_Bar2)
+            screen.blit(self.BG_Bar, self.coord_BG_Bar3)
+            screen.blit(self.HealthBar, self.coord_HealthBar,
+                        ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
+            screen.blit(self.ManaBar, self.coord_ManaBar,
+                        ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
+            screen.blit(self.StaminaBar, self.coord_StaminaBar,
+                        ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
         else:
-            pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
-        font_b = pygame.font.Font('17810.ttf', 30)
-        text = font_b.render(u'Управление', True, (176, 224, 230))
-        screen.blit(text, (x + 10, y + 10))
+            if not self.is_GameOver:
+                self.is_GameOver = True
+                s = pygame.Surface((800, 600), pygame.SRCALPHA)  # per-pixel alpha
+                s.fill((0, 0, 0, 128))  # notice the alpha value in the color
+                display.blit(s, (0, 0))
+        # обновление экрана
+        pygame.display.flip()
+        pygame.display.update()
 
-    def button_game(self, x, y, width_b, height_b, screen):
-        mouse = pygame.mouse.get_pos()
-        click_mouse = pygame.mouse.get_pressed()
+        # if self.player.is_dead:
+        #     print('YOU DIED')
+        #     return
 
-        if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
-            pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
-            if click_mouse[0] == 1:
-                self.action2()
-                self.main(screen)
-        else:
-            pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
-        font_b = pygame.font.Font('17810.ttf', 26)
-        text = font_b.render(u'Перейти к игре', True, (176, 224, 230))
-        screen.blit(text, (x + 10, y + 10))
 
-    def start_screen2(self, screen):
+def terminate(self):
+    pygame.quit()
+    sys.exit()
 
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.terminate()
-                elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                    self.pause()
 
-            self.button_control(130, 500, 210, 50, screen)
-            self.button_game(520, 500, 230, 50, screen)
-            if self.start_game is False:
-                break
-            for i in self.images:
-                fon = i
-                screen.blit(fon, (0, 0))
-                pygame.font.init()
-                myfont = pygame.font.Font('17810.ttf', 60)
-                string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
-                screen.blit(string_rendered, (220, 50))
-                intro_text = ["", "", "", "", "",
-                              "В нашей игре ведьма Моргана сталкивается",
-                              " с разными испытаниями. На каждом уровне ",
-                              "её ждет новое задание. Чтобы получить метлу, ",
-                              "Ключ от тайной комнаты и суперспособности, ",
-                              "Моргане придется бороться с монстрами и идти ",
-                              "в нужном направлении. Но Моргана не сдается ",
-                              "несмотря на все трудности."]
-                newfont = pygame.font.Font('17810.ttf', 20)
-                text_coord = 50
-                for line in intro_text:
-                    string_rendered = newfont.render(line, 1, (176, 224, 230))
-                    intro_rect = string_rendered.get_rect()
-                    text_coord += 10
-                    intro_rect.top = text_coord
-                    intro_rect.x = 180
-                    text_coord += intro_rect.height
-                    screen.blit(string_rendered, intro_rect)
-            pygame.display.flip()
-            clock.tick(FPS)
+def action1(self):
+    self.flag = False
 
-    def button(self, x, y, width_b, height_b, screen):
-        mouse = pygame.mouse.get_pos()
-        click_mouse = pygame.mouse.get_pressed()
 
-        if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
-            pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
-            if click_mouse[0] == 1:
-                self.action1()
-                self.start_screen2(screen)
+def action2(self):
+    self.start_game = False
 
-        else:
-            pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
-        font_b = pygame.font.Font('17810.ttf', 35)
-        text = font_b.render(u'Начать игру', True, (176, 224, 230))
-        screen.blit(text, (x + 10, y + 10))
 
-    def start_screen1(self, screen):
-        i = 0
-        # s = 0
-        # dt = clock.tick(self.fps)
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.terminate()
-                elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                    self.pause()
-            # s += dt
-            # if s == 0.0001:
-            s = 0
-            i = (i + 1) % 6
-            fon = self.images[i]
+def button_control(self, x, y, width_b, height_b, screen):
+    mouse = pygame.mouse.get_pos()
+    click_mouse = pygame.mouse.get_pressed()
+
+    if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
+        pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
+        if click_mouse[0] == 1:
+            action()
+    else:
+        pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
+    font_b = pygame.font.Font('17810.ttf', 30)
+    text = font_b.render(u'Управление', True, (176, 224, 230))
+    screen.blit(text, (x + 10, y + 10))
+
+
+def button_game(self, x, y, width_b, height_b, screen):
+    mouse = pygame.mouse.get_pos()
+    click_mouse = pygame.mouse.get_pressed()
+
+    if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
+        pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
+        if click_mouse[0] == 1:
+            self.action2()
+            self.main(screen)
+    else:
+        pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
+    font_b = pygame.font.Font('17810.ttf', 26)
+    text = font_b.render(u'Перейти к игре', True, (176, 224, 230))
+    screen.blit(text, (x + 10, y + 10))
+
+
+def start_screen2(self, screen):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.terminate()
+            elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                self.pause()
+
+        self.button_control(130, 500, 210, 50, screen)
+        self.button_game(520, 500, 230, 50, screen)
+        if self.start_game is False:
+            break
+        for i in self.images:
+            fon = i
             screen.blit(fon, (0, 0))
             pygame.font.init()
             myfont = pygame.font.Font('17810.ttf', 60)
             string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
-            screen.blit(string_rendered, (200, 50))
-            self.button(320, 280, 240, 55, screen)
-            if self.flag is False:
-                break
-            pygame.display.update()
+            screen.blit(string_rendered, (220, 50))
+            intro_text = ["", "", "", "", "",
+                          "В нашей игре ведьма Моргана сталкивается",
+                          " с разными испытаниями. На каждом уровне ",
+                          "её ждет новое задание. Чтобы получить метлу, ",
+                          "Ключ от тайной комнаты и суперспособности, ",
+                          "Моргане придется бороться с монстрами и идти ",
+                          "в нужном направлении. Но Моргана не сдается ",
+                          "несмотря на все трудности."]
+            newfont = pygame.font.Font('17810.ttf', 20)
+            text_coord = 50
+            for line in intro_text:
+                string_rendered = newfont.render(line, 1, (176, 224, 230))
+                intro_rect = string_rendered.get_rect()
+                text_coord += 10
+                intro_rect.top = text_coord
+                intro_rect.x = 180
+                text_coord += intro_rect.height
+                screen.blit(string_rendered, intro_rect)
         pygame.display.flip()
-        clock.tick(FPS * 10000000)
+        clock.tick(FPS)
+
+
+def button(self, x, y, width_b, height_b, screen):
+    mouse = pygame.mouse.get_pos()
+    click_mouse = pygame.mouse.get_pressed()
+
+    if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
+        pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
+        if click_mouse[0] == 1:
+            self.action1()
+            self.start_screen2(screen)
+
+    else:
+        pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
+    font_b = pygame.font.Font('17810.ttf', 35)
+    text = font_b.render(u'Начать игру', True, (176, 224, 230))
+    screen.blit(text, (x + 10, y + 10))
+
+
+def start_screen1(self, screen):
+    i = 0
+    # s = 0
+    # dt = clock.tick(self.fps)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.terminate()
+            elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                self.pause()
+        # s += dt
+        # if s == 0.0001:
+        s = 0
+        i = (i + 1) % 6
+        fon = self.images[i]
+        screen.blit(fon, (0, 0))
+        pygame.font.init()
+        myfont = pygame.font.Font('17810.ttf', 60)
+        string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
+        screen.blit(string_rendered, (200, 50))
+        self.button(320, 280, 240, 55, screen)
+        if self.flag is False:
+            break
+        pygame.display.update()
+    pygame.display.flip()
+    clock.tick(FPS * 10000000)
 
 
 def load_map(name):
@@ -660,9 +665,5 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(screen_size)
     FPS = 50
     clock = pygame.time.Clock()
-<<<<<<< HEAD
-    Game().start_screen1(screen)
-=======
-    Game().start_screen1(screen)
 
->>>>>>> origin/main_menu
+    Game().start_screen1(screen)

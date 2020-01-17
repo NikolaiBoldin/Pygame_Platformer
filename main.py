@@ -50,7 +50,7 @@ class Game:
         self.clicked_go_over_game = True
 
     def show_text(self, screen, text):
-        pass
+
 
 
     def main(self, screen):
@@ -79,8 +79,6 @@ class Game:
                     return
                 if ev.type == MOUSEBUTTONDOWN and ev.button == 1:
                     self.player.left_MouseButton = True
-                if ev.type == KEYDOWN and ev.key == K_SPACE:
-                    self.player.Space_click = True
 
             if not self.player.is_GameOver:
                 self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
@@ -269,4 +267,4 @@ def load_map(name):
 if __name__ == '__main__':
     init()
     disp = display.set_mode((900, 600))
-    Game().main_menu(disp)
+    Game().main(disp)
