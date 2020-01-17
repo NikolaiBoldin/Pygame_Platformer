@@ -49,6 +49,9 @@ class Game:
         self.clicked_start_game = True
         self.clicked_go_over_game = True
 
+    def show_text(self, screen, text):
+
+
 
     def main(self, screen):
         clock = time.Clock()
