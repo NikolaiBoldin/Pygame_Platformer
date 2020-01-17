@@ -13,7 +13,6 @@ class Game:
         self.sprites = tmx.SpriteLayer()
         self.player = None
         self.enemies = tmx.SpriteLayer()
-        self.boss = tmx.SpriteLayer()
         self.fps = 60
         self.is_GameOver = False
         # загрузака полос: здоровья, маны и выносливости
@@ -158,7 +157,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.terminate()
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    self.clicked_enter = True
+                    self.clicked_enter = False
             if self.clicked_enter is False:
                 self.start_screen2(screen)
                 break
@@ -224,8 +223,8 @@ class Game:
                 if self.frame_nomber_MAIN_MENU == 0:
                     self.direction_MainMenu *= -1
                 self.timer_of_update_MainMenu = 0
-                s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
-                s.fill((0, 0, 0, 128))  # notice the alpha value in the color
+                s = pygame.Surface((900, 600), pygame.SRCALPHA)
+                s.fill((0, 0, 0, 128))
                 screen.blit(s, (0, 0))
             intro_text = ["", "",
                           "В нашей игре ведьма Моргана сталкивается",
