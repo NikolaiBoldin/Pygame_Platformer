@@ -56,7 +56,7 @@ class Game:
         clock = time.Clock()
 
         mouse.set_visible(False)  # мышь не отображается
-        self.tile_map = load_map('Dark swamps.tmx')
+        self.tile_map = load_map('Testing.tmx')
 
         start_cell = self.tile_map.layers['Spawn'].find('player')[0]
 
@@ -112,7 +112,6 @@ class Game:
                     string_rendered = my_font.render(u'GAME OVER', 1, (47, 79, 79))
                     screen.blit(string_rendered, (120, 270))
 
-
             # обновление экрана
             display.flip()
             display.update()
@@ -135,6 +134,7 @@ class Game:
 
     def screen_control(self, screen):
         clock = time.Clock()
+        self.clicked_enter = True
         fon = pygame.transform.scale(load_image('Main menu BG/fon_dark_control.jpg'), (900, 600))
         screen.blit(fon, (0, 0))
         pygame.font.init()
@@ -156,16 +156,19 @@ class Game:
             intro_rect.x = 180
             text_coord += intro_rect.height
             screen.blit(string_rendered, intro_rect)
-
+        pygame.display.flip()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     self.action4()
+                if event.type == QUIT:
+                    return
+                if event.type == KEYDOWN and event.key == K_ESCAPE:
+                    return
             if self.clicked_enter is False:
-                self.start_screen2(screen)
                 break
-            pygame.display.flip()
-            clock.tick(self.fps)
+        if self.clicked_enter is False:
+            self.start_screen2(disp)
 
     def button_control(self, x, y, width_b, height_b, screen):
         mouse = pygame.mouse.get_pos()
@@ -203,7 +206,8 @@ class Game:
         font.init()
         my_font = font.Font('data/fonts/17810.ttf', 60)
         string_rendered = my_font.render(u'Witch adventure', 1, (47, 79, 79))
-
+        self.clicked_go_over_game = True
+        self.clicked_control = True
         while True:
             dt = clock.tick(60) / 1000
             clock.tick(self.fps)
