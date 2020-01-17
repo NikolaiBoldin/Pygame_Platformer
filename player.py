@@ -75,6 +75,7 @@ class Player(sprite.Sprite):
         self.take_damage.set_volume(0.3)
 
         self.left_MouseButton = False  # нажата ли ЛКМ?
+        self.Space_click = False
 
     # обновление анимации
     def set_frame(self, dt):
@@ -131,7 +132,8 @@ class Player(sprite.Sprite):
                                         self.image = self.frames_right['move'][self.frame_number_MOVE]
                                     else:
                                         self.image = self.frames_left['move'][self.frame_number_MOVE]
-                                    self.frame_number_MOVE = (self.frame_number_MOVE + 1) % len(self.frames_left['move'])
+                                    self.frame_number_MOVE = (self.frame_number_MOVE + 1) % len(
+                                        self.frames_left['move'])
                                     self.timer_of_update = 0
                             else:
                                 # анимация покоя
@@ -140,7 +142,8 @@ class Player(sprite.Sprite):
                                         self.image = self.frames_right['idle'][self.frame_number_IDLE]
                                     else:
                                         self.image = self.frames_left['idle'][self.frame_number_IDLE]
-                                    self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_left['idle'])
+                                    self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(
+                                        self.frames_left['idle'])
                                     self.timer_of_update = 0
                         else:
                             # анимация полета после прыжка
@@ -195,6 +198,7 @@ class Player(sprite.Sprite):
                 self.is_jump = True
                 self.run_sound.stop()
                 self.jump_sound.play()
+                self.Space_click = False
                 if self.direction == 1:  # анимация начала прыжка
                     self.image = self.frames_right['move'][5]
                     self.timer_of_update = 0
@@ -204,8 +208,13 @@ class Player(sprite.Sprite):
             print(keys[K_SPACE])
             # падение героя если находится в воздухе
             if not self.on_the_ground:
-                if self.is_jump and keys[K_SPACE] and (self.STAMINA > 25 or self.is_fly):  # полёт
+                if self.is_jump and keys[K_SPACE] and not self.is_stun and self.Space_click and (
+                        self.STAMINA > 25 or self.is_fly):  # полёт
                     self.is_fly = True
+                    self.STAMINA -= 1.5
+                    if self.STAMINA <= 0:
+                        self.STAMINA = 0
+                        self.is_fly = False
                 else:
                     if self.gravity_force >= self.max_gravity_force:
                         self.gravity_force = self.max_gravity_force
@@ -215,7 +224,10 @@ class Player(sprite.Sprite):
                     self.rect.y += self.gravity_force
                     self.mask_for_platform.y -= self.jump_force
                     self.mask_for_platform.y += self.gravity_force
+                    self.is_fly = False
 
+            if not self.is_fly and self.STAMINA < self.max_stamina:
+                self.STAMINA += 0.25
             # способность (ЛКМ)
             if self.timer_of_spell > 0:  # перезарядка способности
                 self.timer_of_spell -= dt
@@ -322,4 +334,3 @@ class FireBall(sprite.Sprite):
         self.SpriteSheet = load_image('Witch/Witch Sprite Sheet.png')
         self.frames_right = get_list_sprites(self.SpriteSheet, 0, 45, 64, 64)
         self.frames_left = list(map(lambda im: transform.flip(im, True, False), self.frames_right))
-
