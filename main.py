@@ -54,7 +54,7 @@ class Game:
         clock = time.Clock()
 
         mouse.set_visible(False)  # мышь не отображается
-        self.tile_map = load_map('testing.tmx')
+        self.tile_map = load_map('Dark swamps.tmx')
 
         start_cell = self.tile_map.layers['Spawn'].find('player')[0]
 
@@ -255,6 +255,7 @@ class Game:
             display.update()
 
 
+
 def load_map(name):
     fullname = os.path.join('data/maps', name)
     return tmx.load(fullname, disp.get_size())
@@ -263,4 +264,4 @@ def load_map(name):
 if __name__ == '__main__':
     init()
     disp = display.set_mode((900, 600))
-    Game().main_menu(disp)
+    Game().main(disp)
