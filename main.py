@@ -48,6 +48,7 @@ class Game:
         self.clicked_start_game = True
         self.clicked_go_over_game = True
         self.clicked_control = True
+        self.clicked_enter = True
 
     # def show_text(self, screen, text):
 
@@ -152,8 +153,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.terminate()
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    self.start_screen2(display.set_mode((900, 600)).blit(self.fons[0], (0, 0)))
-                    break
+                    self.clicked_enter = False
+            if self.clicked_enter is False:
+                self.start_screen2(display.set_mode((900, 600)))
+                break
             pygame.display.flip()
             clock.tick(self.fps)
 
@@ -229,6 +232,7 @@ class Game:
                           "несмотря на все трудности."]
             newfont = pygame.font.Font('data/fonts/17810.ttf', 20)
             text_coord = 80
+
             for line in intro_text:
                 string_rendered_text = newfont.render(line, 1, (176, 224, 230))
                 intro_rect = string_rendered_text.get_rect()
