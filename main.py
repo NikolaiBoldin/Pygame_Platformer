@@ -187,6 +187,7 @@ class Game:
 
     def start_screen2(self, screen):
         clock = time.Clock()
+        screen.blit(self.fons[0], (0, 0))
         font.init()
         my_font = font.Font('data/fonts/17810.ttf', 60)
         string_rendered = my_font.render(u'Witch adventure', 1, (47, 79, 79))
@@ -304,4 +305,5 @@ def load_map(name):
 
 if __name__ == '__main__':
     init()
-    Game().main_menu(display.set_mode((900, 600)).blit('Main menu BG/0.jpg', (0, 0)))
+    disp = display.set_mode((900, 600))
+    Game().main_menu(disp)
