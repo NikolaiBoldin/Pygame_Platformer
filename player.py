@@ -1,11 +1,12 @@
-from pygame import *
+# from pygame import *
+from methods import *
 
 
 class Player(sprite.Sprite):
     def __init__(self, location, *groups):
         super().__init__(*groups)  # добавление к группе спрайтов
         # анимация
-        self.SpriteSheet = load_image('sprites/Witch/Witch Sprite Sheet.png')
+        self.SpriteSheet = load_image('Witch/Witch Sprite Sheet.png')
         self.frames_right = {'idle': get_list_sprites(self.SpriteSheet, 0, 4, 64, 64),
                              'move': get_list_sprites(self.SpriteSheet, 1, 8, 64, 64),
                              'spell': get_list_sprites(self.SpriteSheet, 2, 8, 64, 64),
@@ -64,10 +65,10 @@ class Player(sprite.Sprite):
         self.gravity_force = 0  # сила гравитации
         self.max_gravity_force = 50  # сила максимальная сила гравитации
         # звуки
-        self.jump_sound = pygame.mixer.Sound('data/sounds/gruntJumpFemale.wav')  # звук прыжка
-        self.run_sound = pygame.mixer.Sound('data/sounds/footstepsTurn.wav')  # звук бега
-        self.enemy_punch = pygame.mixer.Sound('data/sounds/wooosh.wav')  # звук удара врага
-        self.take_damage = pygame.mixer.Sound('data/sounds/splatFemale.wav')  # звук получения урона
+        self.jump_sound = mixer.Sound('data/sounds/gruntJumpFemale.wav')  # звук прыжка
+        self.run_sound = mixer.Sound('data/sounds/footstepsTurn.wav')  # звук бега
+        self.enemy_punch = mixer.Sound('data/sounds/wooosh.wav')  # звук удара врага
+        self.take_damage = mixer.Sound('data/sounds/splatFemale.wav')  # звук получения урона
         self.jump_sound.set_volume(0.1)
         self.run_sound.set_volume(0.1)
         self.take_damage.set_volume(0.3)
@@ -147,9 +148,8 @@ class Player(sprite.Sprite):
     def update(self, dt, game):
         if not self.is_dead or self.is_stun:
             last_masc = self.mask_for_platform.copy()
-            keys = key.get_pressed()
-
             # движение влево
+            keys = key.get_pressed()
             if keys[K_a] and not keys[K_d] and not self.is_stun and not self.is_SpellCast:
                 self.rect.x -= 7
                 self.mask_for_platform.x -= 7
@@ -211,27 +211,29 @@ class Player(sprite.Sprite):
                     self.timer_of_spell = self.spell_cooldown
                     self.frame_number_SPELL = 2
                     self.timer_of_update = 0
-                    if self.direction == 1:
+                    if self.direction == 1:  # начало анимации способности
                         self.image = self.frames_right['spell'][1]
                     else:
                         self.image = self.frames_right['spell'][1]
 
+            # определение столкновений героя с платформами
             new = self.rect
             new_masc = self.mask_for_platform
             self.on_the_ground = False
             for cell in game.tile_map.layers['Blocking'].collide(new_masc, 'blockers'):
                 blockers = cell['blockers']
-                if 'l' in blockers and last_masc.right <= cell.left < new_masc.right:
+                # print(blockers)
+                if 'l' in blockers and last_masc.right <= cell.left < new_masc.right:  # left
                     new.right = cell.left + 23
                     new_masc.right = cell.left
-                if 'r' in blockers and last_masc.left >= cell.right > new_masc.left:
+                if 'r' in blockers and last_masc.left >= cell.right > new_masc.left:  # right
                     new.left = cell.right - 23
                     new_masc.left = cell.right
-                if 't' in blockers and last_masc.bottom <= cell.top < new_masc.bottom:
+                if 't' in blockers and last_masc.bottom <= cell.top < new_masc.bottom:  # top
                     self.jump_force = 0
                     self.gravity_force = 0
                     self.on_the_ground = True
-                    if self.is_jump:  # анимация приземления
+                    if self.is_jump:  # анимация приземления после прыжка
                         if self.direction == 1:
                             self.image = self.frames_right['move'][7]
                             self.timer_of_update = 0.03
@@ -241,11 +243,12 @@ class Player(sprite.Sprite):
                     self.is_jump = False
                     new.bottom = cell.top
                     new_masc.bottom = cell.top
-                if 'b' in blockers and last_masc.top >= cell.bottom > new_masc.top:
+                if 'b' in blockers and last_masc.top >= cell.bottom > new_masc.top:  # bottom
                     self.gravity_force = self.jump_force
                     new.top = cell.bottom - 15
-                    new_masc.top = cell.bottom
+                    new_masc.top = cell.bottom  # что бы не прилипал
 
+            # оглушение
             if self.is_stun and self.timer_of_stun > 0:
                 self.timer_of_stun -= dt
                 if self.is_dead and self.on_the_ground:
@@ -267,9 +270,11 @@ class Player(sprite.Sprite):
                         self.timer_of_update = 0
                 self.is_stun = False
 
+            # обновление времени иммунитета
             if self.timer_of_immunity > 0:
                 self.timer_of_immunity -= dt
 
+            # пересечение с врагами по макам
             for enemy in sprite.spritecollide(self, game.enemies, False):
                 if sprite.collide_mask(self, enemy) and self.timer_of_immunity <= 0 and not self.is_dead:
                     self.take_damage.play()
@@ -291,27 +296,6 @@ class Player(sprite.Sprite):
                         self.image = self.frames_left['damage'][1]
                         self.timer_of_update = 0
             game.tile_map.set_focus(new.x, new.y)  # камера
+
         self.set_frame(dt)
 
-
-def get_list_sprites(sheet, line, count_frames, x, y):
-    list_frames = []
-    for i in range(count_frames):
-        list_frames.append(sheet.subsurface(Rect(
-            (x * i, y * line), (x, y))))
-    return list_frames
-
-
-def load_image(name, color_key=None):
-    fullname = os.path.join('data', name)
-    try:
-        im = pygame.image.load(fullname)
-    except pygame.error as message:
-        print('Не удаётся загрузить:', name)
-        raise SystemExit(message)
-    im = im.convert_alpha()
-    if color_key is not None:
-        if color_key == -1:
-            color_key = im.get_at((0, 0))
-        im.set_colorkey(color_key)
-    return im

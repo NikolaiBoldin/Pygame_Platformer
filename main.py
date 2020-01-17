@@ -1,4 +1,11 @@
-import game.player as pl
+# import pygame
+# import sys
+# import os
+import data.maps.tmx as tmx
+# from pygame import *
+from player import *
+from enemies import *
+import pygame
 
 
 class Game:
@@ -10,10 +17,10 @@ class Game:
         self.fps = 60
         self.is_GameOver = False
         # загрузака полос: здоровья, маны и выносливости
-        self.HealthBar = load_image('sprites/Health Bar/Health.png')
-        self.ManaBar = load_image('sprites/Health Bar/Mana.png')
-        self.StaminaBar = load_image('sprites/Health Bar/Stamina.png')
-        self.BG_Bar = load_image('sprites/Health Bar/BG bar.png')
+        self.HealthBar = load_image('Health Bar/Health.png')
+        self.ManaBar = load_image('Health Bar/Mana.png')
+        self.StaminaBar = load_image('Health Bar/Stamina.png')
+        self.BG_Bar = load_image('Health Bar/BG bar.png')
         # координаты полос
         self.size_bar = self.HealthBar.get_size()
         self.coord_BG_Bar1 = (3, 3)
@@ -26,6 +33,19 @@ class Game:
         self.offset_health = 0
         self.offset_mana = 0
         self.offset_stamina = 0
+
+        # главное меню
+        self.fons = [transform.scale(load_image('Main menu BG/0.jpg'), (900, 600)),
+                     transform.scale(load_image('Main menu BG/1.jpg'), (900, 600)),
+                     transform.scale(load_image('Main menu BG/2.jpg'), (900, 600)),
+                     transform.scale(load_image('Main menu BG/3.jpg'), (900, 600)),
+                     transform.scale(load_image('Main menu BG/4.jpg'), (900, 600)),
+                     transform.scale(load_image('Main menu BG/5.jpg'), (900, 600)), ]
+        self.frame_nomber_MAIN_MENU = 1
+        self.update_rate_MainMenu = 0.2  # скорость обновления анимации в секунадх
+        self.timer_of_update_MainMenu = 0  # таймер обновлений
+        self.direction_MainMenu = 1
+
         self.flag = True
         self.start_game = True
 
@@ -33,8 +53,9 @@ class Game:
         self.start_game = True
 
     def main(self, screen):
-        clock = pygame.time.Clock()
-        mouse.set_visible(False)
+        clock = time.Clock()
+
+        mouse.set_visible(False)  # мышь не отображается
         self.tile_map = load_map('testing.tmx')
 
         start_cell = self.tile_map.layers['Spawn'].find('player')[0]
@@ -49,40 +70,24 @@ class Game:
         while 1:
             dt = clock.tick(self.fps)  # задержка игрового цикла
             self.player.left_MouseButton = False
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    return
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    return
 
-            self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
-            screen.fill(Color("black"))
-            self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
-            # смещение полос
-            self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
-            self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.mana / self.player.max_mana)
-            self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (self.player.stamina / self.player.max_stamina)
-            # отрисовка полос
-            screen.blit(self.BG_Bar, self.coord_BG_Bar1)
-            screen.blit(self.BG_Bar, self.coord_BG_Bar2)
-            screen.blit(self.BG_Bar, self.coord_BG_Bar3)
-            screen.blit(self.HealthBar, self.coord_HealthBar,
-                        ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
-            screen.blit(self.ManaBar, self.coord_ManaBar,
-                        ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
-            screen.blit(self.StaminaBar, self.coord_StaminaBar,
-                        ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                self.player.left_MouseButton = True
+            for ev in event.get():
+                if ev.type == QUIT:
+                    return
+                if ev.type == KEYDOWN and ev.key == K_ESCAPE:
+                    return
+                if ev.type == MOUSEBUTTONDOWN and ev.button == 1:
+                    self.player.left_MouseButton = True
+
             if not self.player.is_GameOver:
                 self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
                 screen.fill(Color("black"))
                 self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
                 # смещение полос
                 self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
-                self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.mana / self.player.max_mana)
+                self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.MANA / self.player.max_mana)
                 self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (
-                        self.player.stamina / self.player.max_stamina)
+                        self.player.STAMINA / self.player.max_stamina)
                 # отрисовка полос
                 screen.blit(self.BG_Bar, self.coord_BG_Bar1)
                 screen.blit(self.BG_Bar, self.coord_BG_Bar2)
@@ -93,6 +98,7 @@ class Game:
                             ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
                 screen.blit(self.StaminaBar, self.coord_StaminaBar,
                             ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+
             else:
                 if not self.is_GameOver:
                     self.is_GameOver = True
@@ -100,12 +106,8 @@ class Game:
                     s.fill((0, 0, 0, 128))  # notice the alpha value in the color
                     display.blit(s, (0, 0))
             # обновление экрана
-            pygame.display.flip()
-            pygame.display.update()
-
-            # if self.player.is_dead:
-            #     print('YOU DIED')
-            #     return
+            display.flip()
+            display.update()
 
     def action1(self):
         self.flag = False
@@ -180,9 +182,10 @@ class Game:
             if self.start_game is False:
                 break
             pygame.display.flip()
-            clock.tick(FPS)
+            clock.tick(self.fps)
 
     def button(self, x, y, width_b, height_b, screen):
+
         mouse = pygame.mouse.get_pos()
         click_mouse = pygame.mouse.get_pressed()
 
@@ -194,40 +197,54 @@ class Game:
 
         else:
             pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
-        font_b = pygame.font.Font('17810.ttf', 35)
+        font_b = pygame.font.Font('data/fonts/17810.ttf', 35)
         text = font_b.render(u'Начать игру', True, (176, 224, 230))
         screen.blit(text, (x + 10, y + 10))
 
-    def start_screen1(self, screen):
-        fon = pygame.transform.scale(load_image('fon.jpg'), (900, 600))
-        screen.blit(fon, (0, 0))
-        pygame.font.init()
-        myfont = pygame.font.Font('17810.ttf', 60)
-        string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
-        screen.blit(string_rendered, (200, 50))
+    def main_menu(self, screen):
+        clock = time.Clock()
+        screen.blit(self.fons[0], (0, 0))
+        font.init()
+        my_font = font.Font('data/fonts/17810.ttf', 60)
+        string_rendered = my_font.render(u'Witch adventure', 1, (47, 79, 79))
 
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.terminate()
-                elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                    self.pause()
+            dt = clock.tick(60) / 1000
+            clock.tick(self.fps)
+            self.timer_of_update_MainMenu += dt
+            for ev in event.get():
+                if ev.type == QUIT:
+                    return
+                if ev.type == KEYDOWN and ev.key == K_ESCAPE:
+                    return
+
+            if self.timer_of_update_MainMenu >= self.update_rate_MainMenu:
+                screen.fill(Color("black"))
+                if self.direction_MainMenu == 1:
+                    screen.blit(self.fons[self.frame_nomber_MAIN_MENU], (0, 0))
+                else:
+                    if self.frame_nomber_MAIN_MENU == 0:
+                        self.frame_nomber_MAIN_MENU += 1
+                    screen.blit(self.fons[-1 - self.frame_nomber_MAIN_MENU], (0, 0))
+                self.frame_nomber_MAIN_MENU = (self.frame_nomber_MAIN_MENU + 1) % len(self.fons)
+                if self.frame_nomber_MAIN_MENU == 0:
+                    self.direction_MainMenu *= -1
+                self.timer_of_update_MainMenu = 0
+
             self.button(320, 280, 240, 55, screen)
+            screen.blit(string_rendered, (200, 50))
             if self.flag is False:
                 break
-            pygame.display.flip()
-            clock.tick(FPS)
+            display.flip()
+            display.update()
 
 
 def load_map(name):
     fullname = os.path.join('data/maps', name)
-    return tmx.load(fullname, screen.get_size())
+    return tmx.load(fullname, disp.get_size())
 
 
 if __name__ == '__main__':
-    pygame.init()
-    screen_size = WIDTH, HEIGHT = 900, 600
-    screen = pygame.display.set_mode(screen_size)
-    FPS = 50
-    clock = pygame.time.Clock()
-    Game().start_screen1(screen)
+    init()
+    disp = display.set_mode((900, 600))
+    Game().main_menu(disp)
