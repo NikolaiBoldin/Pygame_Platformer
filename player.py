@@ -37,6 +37,7 @@ class Player(sprite.Sprite):
         self.is_SpellCast = False  # кастует способность?
         self.is_GameOver = False  # игра закончена?
         self.is_dead = False  # персонаж умер?
+        self.is_fly = False  # активен полёт?
         self.on_the_ground = False  # персонаж стоит на платформе?
         self.direction = 1  # направление персонажа: 1 -> право, -1 -> лево
         # длительность эффектов
@@ -90,55 +91,65 @@ class Player(sprite.Sprite):
                 if self.frame_number_DEATH == 0:
                     self.is_GameOver = True
         else:
-            if self.is_SpellCast:
-                # анимация каста способности
+            if self.is_fly:
+                # анимация полёта
                 if self.timer_of_update >= self.update_rate:
                     self.timer_of_update = 0
                     if self.direction == 1:
-                        self.image = self.frames_right['spell'][self.frame_number_SPELL]
+                        self.image = self.frames_right['flight'][self.frame_number_FLIGHT]
                     else:
-                        self.image = self.frames_left['spell'][self.frame_number_SPELL]
-                    self.frame_number_SPELL = (self.frame_number_SPELL + 1) % len(self.frames_left['spell'])
-                    if self.frame_number_SPELL == 0:
-                        self.is_SpellCast = False
+                        self.image = self.frames_left['flight'][self.frame_number_FLIGHT]
+                    self.frame_number_FLIGHT = (self.frame_number_FLIGHT + 1) % len(self.frames_left['flight'])
             else:
-                if self.is_stun:
-                    # анимация оглушения
+                if self.is_SpellCast:
+                    # анимация каста способности
                     if self.timer_of_update >= self.update_rate:
+                        self.timer_of_update = 0
                         if self.direction == 1:
-                            self.image = self.frames_right['damage'][2]
-                            self.timer_of_update = 0
+                            self.image = self.frames_right['spell'][self.frame_number_SPELL]
                         else:
-                            self.image = self.frames_left['damage'][2]
-                            self.timer_of_update = 0
+                            self.image = self.frames_left['spell'][self.frame_number_SPELL]
+                        self.frame_number_SPELL = (self.frame_number_SPELL + 1) % len(self.frames_left['spell'])
+                        if self.frame_number_SPELL == 0:
+                            self.is_SpellCast = False
                 else:
-                    if not self.is_jump:
-                        if self.is_move:
-                            # анимация ходьбы
-                            if self.timer_of_update >= self.update_rate:
-                                if self.direction == 1:
-                                    self.image = self.frames_right['move'][self.frame_number_MOVE]
-                                else:
-                                    self.image = self.frames_left['move'][self.frame_number_MOVE]
-                                self.frame_number_MOVE = (self.frame_number_MOVE + 1) % len(self.frames_left['move'])
-                                self.timer_of_update = 0
-                        else:
-                            # анимация покоя
-                            if self.timer_of_update >= self.update_rate:
-                                if self.direction == 1:
-                                    self.image = self.frames_right['idle'][self.frame_number_IDLE]
-                                else:
-                                    self.image = self.frames_left['idle'][self.frame_number_IDLE]
-                                self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_left['idle'])
-                                self.timer_of_update = 0
-                    else:
-                        # анимация полета после прыжка
+                    if self.is_stun:
+                        # анимация оглушения
                         if self.timer_of_update >= self.update_rate:
                             if self.direction == 1:
-                                self.image = self.frames_right['move'][6]
+                                self.image = self.frames_right['damage'][2]
+                                self.timer_of_update = 0
                             else:
-                                self.image = self.frames_left['move'][2]
-                            self.timer_of_update = 0
+                                self.image = self.frames_left['damage'][2]
+                                self.timer_of_update = 0
+                    else:
+                        if not self.is_jump:
+                            if self.is_move:
+                                # анимация ходьбы
+                                if self.timer_of_update >= self.update_rate:
+                                    if self.direction == 1:
+                                        self.image = self.frames_right['move'][self.frame_number_MOVE]
+                                    else:
+                                        self.image = self.frames_left['move'][self.frame_number_MOVE]
+                                    self.frame_number_MOVE = (self.frame_number_MOVE + 1) % len(self.frames_left['move'])
+                                    self.timer_of_update = 0
+                            else:
+                                # анимация покоя
+                                if self.timer_of_update >= self.update_rate:
+                                    if self.direction == 1:
+                                        self.image = self.frames_right['idle'][self.frame_number_IDLE]
+                                    else:
+                                        self.image = self.frames_left['idle'][self.frame_number_IDLE]
+                                    self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_left['idle'])
+                                    self.timer_of_update = 0
+                        else:
+                            # анимация полета после прыжка
+                            if self.timer_of_update >= self.update_rate:
+                                if self.direction == 1:
+                                    self.image = self.frames_right['move'][6]
+                                else:
+                                    self.image = self.frames_left['move'][2]
+                                self.timer_of_update = 0
 
     # изменение гравитации для прыжка
     def gravity(self):
@@ -190,17 +201,20 @@ class Player(sprite.Sprite):
                 else:
                     self.image = self.frames_right['move'][1]
                     self.timer_of_update = 0
-
+            print(keys[K_SPACE])
             # падение героя если находится в воздухе
             if not self.on_the_ground:
-                if self.gravity_force >= self.max_gravity_force:
-                    self.gravity_force = self.max_gravity_force
+                if self.is_jump and keys[K_SPACE] and (self.STAMINA > 25 or self.is_fly):  # полёт
+                    self.is_fly = True
                 else:
-                    self.gravity_force += 1  # усиление силы гравитации для ускорения при падении
-                self.rect.y -= self.jump_force
-                self.rect.y += self.gravity_force
-                self.mask_for_platform.y -= self.jump_force
-                self.mask_for_platform.y += self.gravity_force
+                    if self.gravity_force >= self.max_gravity_force:
+                        self.gravity_force = self.max_gravity_force
+                    else:
+                        self.gravity_force += 1  # усиление силы гравитации для ускорения при падении
+                    self.rect.y -= self.jump_force
+                    self.rect.y += self.gravity_force
+                    self.mask_for_platform.y -= self.jump_force
+                    self.mask_for_platform.y += self.gravity_force
 
             # способность (ЛКМ)
             if self.timer_of_spell > 0:  # перезарядка способности
@@ -233,6 +247,7 @@ class Player(sprite.Sprite):
                     self.jump_force = 0
                     self.gravity_force = 0
                     self.on_the_ground = True
+                    self.is_fly = False
                     if self.is_jump:  # анимация приземления после прыжка
                         if self.direction == 1:
                             self.image = self.frames_right['move'][7]
@@ -298,4 +313,13 @@ class Player(sprite.Sprite):
             game.tile_map.set_focus(new.x, new.y)  # камера
 
         self.set_frame(dt)
+
+
+class FireBall(sprite.Sprite):
+    def __init__(self, location, direction, *groups):
+        super().__init__(*groups)  # добавление к группе спрайтов
+
+        self.SpriteSheet = load_image('Witch/Witch Sprite Sheet.png')
+        self.frames_right = get_list_sprites(self.SpriteSheet, 0, 45, 64, 64)
+        self.frames_left = list(map(lambda im: transform.flip(im, True, False), self.frames_right))
 

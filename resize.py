@@ -10,4 +10,7 @@ def resize(filename1, filename2, zoom):
     pygame.image.save(image, filename2)
 
 
-
+resize('data/sprites/Things/thing1.png', 'data/sprites/Things/thing1.png', 2)
+resize('data/sprites/Things/thing2.png', 'data/sprites/Things/thing2.png', 2)
+resize('data/sprites/Things/thing3.png', 'data/sprites/Things/thing3.png', 2)
+resize('data/sprites/Things/thing4.png', 'data/sprites/Things/thing4.png', 2)
