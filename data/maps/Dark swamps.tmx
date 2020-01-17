@@ -40,7 +40,7 @@
    eAHt1KkNADAMA8AMUN5J+uw/WbNASFHARTIKsQ44whEgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIE+gjM0aeLJgQIECBQC6zc6505mWu7aygfAgQIfAg8U4EBLg==
   </data>
  </layer>
- <objectgroup id="6" name="Blocking" visible="0">
+ <objectgroup id="6" name="Blocking">
   <object id="2" x="0" y="0" width="1" height="1024">
    <properties>
     <property name="blockers" value="tblr"/>
@@ -68,7 +68,7 @@
   </object>
   <object id="10" x="960" y="896" width="544" height="81.3333">
    <properties>
-    <property name="blockers" value="tblr"/>
+    <property name="blockers" value="tblr Die"/>
    </properties>
   </object>
   <object id="12" x="1504" y="849.333" width="2336" height="175">

@@ -274,7 +274,9 @@ class Player(sprite.Sprite):
                     self.gravity_force = self.jump_force
                     new.top = cell.bottom - 15
                     new_masc.top = cell.bottom  # что бы не прилипал
-
+                if 'Die' in blockers:
+                    self.HP = 0
+                    self.is_dead = True
             # оглушение
             if self.is_stun and self.timer_of_stun > 0:
                 self.timer_of_stun -= dt
