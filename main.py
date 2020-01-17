@@ -1,11 +1,10 @@
-# import pygame
-# import sys
-# import os
+import pygame
+import sys
+import os
 import data.maps.tmx as tmx
 # from pygame import *
 from player import *
 from enemies import *
-import pygame
 
 
 class Game:
@@ -48,10 +47,9 @@ class Game:
 
         self.clicked_start_game = True
         self.clicked_go_over_game = True
+        self.clicked_control = True
 
-    def show_text(self, screen, text):
-
-
+    # def show_text(self, screen, text):
 
     def main(self, screen):
         clock = time.Clock()
@@ -110,25 +108,67 @@ class Game:
             display.flip()
             display.update()
 
+    def terminate(self):
+        pygame.quit()
+        sys.exit()
+
     def action1(self):
         self.clicked_start_game = False
 
     def action2(self):
         self.clicked_go_over_game = False
 
-    # def button_control(self, x, y, width_b, height_b, screen):
-    #     mouse = pygame.mouse.get_pos()
-    #     click_mouse = pygame.mouse.get_pressed()
-    #
-    #     if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
-    #         pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
-    #         if click_mouse[0] == 1:
-    #             action()
-    #     else:
-    #         pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
-    #     font_b = pygame.font.Font('data/fonts/17810.ttf', 30)
-    #     text = font_b.render(u'Управление', True, (176, 224, 230))
-    #     screen.blit(text, (x + 10, y + 10))
+    def action3(self):
+        self.clicked_control = False
+
+    def screen_control(self, screen):
+        clock = time.Clock()
+        fon = pygame.transform.scale(load_image('Main menu BG/fon_dark_control.jpg'), (900, 600))
+        screen.blit(fon, (0, 0))
+        pygame.font.init()
+        myfont = pygame.font.Font('data/fonts/17810.ttf', 60)
+        string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
+        screen.blit(string_rendered, (220, 50))
+        intro_text = ["", "", "", "", "",
+                      "space - прыжок", "spaceX2 - взлёт",
+                      "'A', 'D' - влево, вправо",
+                      "ЛКМ - использовать заклинание", "", "", "", "", "", "", "",
+                      "                Нажмите Enter для продолжения"]
+        newfont = pygame.font.Font('data/fonts/17810.ttf', 20)
+        text_coord = 50
+        for line in intro_text:
+            string_rendered = newfont.render(line, 1, (176, 224, 230))
+            intro_rect = string_rendered.get_rect()
+            text_coord += 10
+            intro_rect.top = text_coord
+            intro_rect.x = 180
+            text_coord += intro_rect.height
+            screen.blit(string_rendered, intro_rect)
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.terminate()
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    self.start_screen2(display.set_mode((900, 600)).blit(self.fons[0], (0, 0)))
+                    break
+            pygame.display.flip()
+            clock.tick(self.fps)
+
+    def button_control(self, x, y, width_b, height_b, screen):
+        mouse = pygame.mouse.get_pos()
+        click_mouse = pygame.mouse.get_pressed()
+
+        if x < mouse[0] < x + width_b and y < mouse[1] < y + height_b:
+            pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
+            if click_mouse[0] == 1:
+                self.action3()
+                self.screen_control(screen)
+        else:
+            pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
+        font_b = pygame.font.Font('data/fonts/17810.ttf', 30)
+        text = font_b.render(u'Управление', True, (176, 224, 230))
+        screen.blit(text, (x + 10, y + 10))
 
     def button_game(self, x, y, width_b, height_b, screen):
         mouse = pygame.mouse.get_pos()
@@ -147,7 +187,6 @@ class Game:
 
     def start_screen2(self, screen):
         clock = time.Clock()
-        screen.blit(self.fons[0], (0, 0))
         font.init()
         my_font = font.Font('data/fonts/17810.ttf', 60)
         string_rendered = my_font.render(u'Witch adventure', 1, (47, 79, 79))
@@ -195,10 +234,10 @@ class Game:
                 intro_rect.x = 180
                 text_coord += intro_rect.height
                 screen.blit(string_rendered_text, intro_rect)
-            # self.button_control(130, 500, 210, 50, screen)
+            self.button_control(130, 500, 210, 50, screen)
             self.button_game(520, 500, 230, 50, screen)
             screen.blit(string_rendered, (200, 50))
-            if self.clicked_go_over_game is False:
+            if self.clicked_go_over_game is False or self.clicked_control is False:
                 break
             pygame.display.flip()
             clock.tick(self.fps)
@@ -258,13 +297,11 @@ class Game:
             display.update()
 
 
-
 def load_map(name):
     fullname = os.path.join('data/maps', name)
-    return tmx.load(fullname, disp.get_size())
+    return tmx.load(fullname, display.set_mode((900, 600)).get_size())
 
 
 if __name__ == '__main__':
     init()
-    disp = display.set_mode((900, 600))
-    Game().main(disp)
+    Game().main_menu(display.set_mode((900, 600)).blit('Main menu BG/0.jpg', (0, 0)))
