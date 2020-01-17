@@ -130,6 +130,9 @@ class Game:
     def action3(self):
         self.clicked_control = False
 
+    def action4(self):
+        self.clicked_enter = False
+
     def screen_control(self, screen):
         clock = time.Clock()
         fon = pygame.transform.scale(load_image('Main menu BG/fon_dark_control.jpg'), (900, 600))
@@ -157,9 +160,9 @@ class Game:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    self.clicked_enter = False
+                    self.action4()
             if self.clicked_enter is False:
-                self.start_screen2(display.set_mode((900, 600)))
+                self.start_screen2(screen)
                 break
             pygame.display.flip()
             clock.tick(self.fps)
@@ -228,9 +231,8 @@ class Game:
                 screen.blit(s, (0, 0))
             intro_text = ["", "",
                           "В нашей игре ведьма Моргана сталкивается",
-                          " с разными испытаниями. На каждом уровне ",
-                          "её ждет новое задание. Чтобы получить метлу, ",
-                          "Ключ от тайной комнаты и суперспособности, ",
+                          " с разными испытаниями. Чтобы получить метлу, ",
+                          "ключ от тайной комнаты и суперспособности, ",
                           "Моргане придется бороться с монстрами и идти ",
                           "в нужном направлении. Но Моргана не сдается ",
                           "несмотря на все трудности."]
