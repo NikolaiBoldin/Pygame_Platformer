@@ -61,6 +61,7 @@ class Player(sprite.Sprite):
         self.max_mana = 100  # максимальная мана
         self.STAMINA = 30  # выносливость
         self.max_stamina = 100  # максимальная выносливость
+        self.DAMAGE = 25
         # физика
         self.jump_force = 0  # сила прыжка
         self.gravity_force = 0  # сила гравитации
@@ -78,7 +79,7 @@ class Player(sprite.Sprite):
         self.Space_click = False
 
     # обновление анимации
-    def set_frame(self, dt):
+    def set_frame(self, dt, game):
         self.timer_of_update += dt  # обновление таймера
         if self.is_dead:
             # анимация смерти
@@ -111,6 +112,8 @@ class Player(sprite.Sprite):
                         else:
                             self.image = self.frames_left['spell'][self.frame_number_SPELL]
                         self.frame_number_SPELL = (self.frame_number_SPELL + 1) % len(self.frames_left['spell'])
+                        if self.frame_number_SPELL == 5:
+                            self.cast_spell(game, self.DAMAGE)
                         if self.frame_number_SPELL == 0:
                             self.is_SpellCast = False
                 else:
@@ -153,6 +156,13 @@ class Player(sprite.Sprite):
                                 else:
                                     self.image = self.frames_left['move'][2]
                                 self.timer_of_update = 0
+
+    def cast_spell(self, game, damage):
+        if self.direction == 1:
+            x, y = self.rect.right, self.rect.top
+        else:
+            x, y = self.rect.left, self.rect.top
+        FireBall((x, y), self.direction, damage, game.sprites)
 
     # изменение гравитации для прыжка
     def gravity(self):
@@ -205,7 +215,7 @@ class Player(sprite.Sprite):
                 else:
                     self.image = self.frames_right['move'][1]
                     self.timer_of_update = 0
-            print(keys[K_SPACE])
+
             # падение героя если находится в воздухе
             if not self.on_the_ground:
                 if self.is_jump and keys[K_SPACE] and not self.is_stun and self.Space_click and (
@@ -326,13 +336,46 @@ class Player(sprite.Sprite):
                         self.timer_of_update = 0
             game.tile_map.set_focus(new.x, new.y)  # камера
 
-        self.set_frame(dt)
+        self.set_frame(dt, game)
 
 
 class FireBall(sprite.Sprite):
-    def __init__(self, location, direction, *groups):
+    def __init__(self, location, direction, damage, *groups):
         super().__init__(*groups)  # добавление к группе спрайтов
 
-        self.SpriteSheet = load_image('Witch/Witch Sprite Sheet.png')
-        self.frames_right = get_list_sprites(self.SpriteSheet, 0, 45, 64, 64)
+        self.SpriteSheet = load_image('Witch/FireBall_3_64x64.png')
+        self.frames_right = get_list_sprites(self.SpriteSheet, 0, 60, 64, 64)
         self.frames_left = list(map(lambda im: transform.flip(im, True, False), self.frames_right))
+        self.direction = direction
+        self.image = None
+        if self.direction == 1:
+            self.image = self.frames_right[0]
+        else:
+            self.image = self.frames_left[0]
+        self.rect = Rect(location, self.image.get_size())
+        self.damage = damage
+        self.lifespan = 3
+        self.update_rate = 0.05  # скорость обновления анимации в секунадх
+        self.timer_of_update = 0  # таймер обновлений
+        self.frame_number_IDLE = 1  # номера кадров
+
+    def set_frame(self, dt):
+        self.timer_of_update += dt
+        if self.timer_of_update >= self.update_rate:
+            if self.direction == 1:
+                self.image = self.frames_right[self.frame_number_IDLE]
+            else:
+                self.image = self.frames_left[self.frame_number_IDLE]
+            self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_right)
+
+    def update(self, dt, game):
+        self.lifespan -= dt
+        if self.lifespan < 0:
+            self.kill()
+            return
+        self.rect.x += self.direction * 10
+
+        for enemy in sprite.spritecollide(self, game.enemies, False):
+            enemy.HP -= self.damage
+            self.kill()
+        self.set_frame(dt)

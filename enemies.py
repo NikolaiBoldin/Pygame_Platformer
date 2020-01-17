@@ -17,6 +17,7 @@ class Enemy(sprite.Sprite):
         self.mask = mask.from_surface(self.image)
         self.damege = 30
         self.stun = 1
+        self.HP = 50
         self.update_rate = 0.2  # скорость обновления анимации в секунадх
         self.timer_of_update = 0  # таймер обновлений
         self.frame_number_IDLE = 0  # номера кадров
@@ -32,6 +33,8 @@ class Enemy(sprite.Sprite):
             self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_left)
 
     def update(self, dt, game):
+        if self.HP <= 0:
+            self.kill()
         self.rect.x += self.direction * 1
         for cell in game.tile_map.layers['Triggers'].collide(self.rect, 'reverse'):
             if self.direction == 1:
