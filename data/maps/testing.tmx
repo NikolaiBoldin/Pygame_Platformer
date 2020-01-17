@@ -24,7 +24,7 @@
    eAHtlFsrRGEUhr/GMJmhiAvXDsnh/5D4B6LcSHHBD8A0DoX8A1cOyeGWuJIrhxxmQq64kEuH56tZtdrNxg3Ze9aqp7W+d/bs9vuu2eOclSVgCVgCloAlYAlYApaAJWAJWAKWgCVgCVgClkBcE5hOOzcDs5CFXAjz6AsQ9VrHwwZswhZsh7CDvgtRrzM8nMMFXMJVCDfotxD1esPDO3x4LxnnEiEk0Ssh6tWMhxZohTZoD6EDvROiXoN4uCwyTF+EkQBeG4M4VBYf4ncu4NP73uN3vg+rMfEr+x3Cj9+v7Fb2nMdrAeK23xxe/X7Fp/iuQktBnPcrntfw2QXdMApSPcy90Begn/MA/OeS91f2K3s94blPYQmWYQWkxpkn1Fn0SbSpoh7M5L9kIf9V+v31Xl/Be5dd6/f3AP0QgqX1YCZhWfx1DuJX9vuCD/Equ/Zdv7/al/asdT37a/RZZ1Eqh9/MQPxe4ekammqcy9MLcAf38ACPIKWfXTTfta7nrz7T10kOOgN9/7D5iGc7hp90hz9PAiogCVWQgmpIQwZqQe5Xx1yvzqV0uUaeQ59l9t+T2V8ns3S573f9ie8+Q7n0BrJvhHLpn7Ma5XE=
   </data>
  </layer>
- <objectgroup color="#55ffff" id="9" name="Triggers" visible="0">
+ <objectgroup color="#55ffff" id="9" name="Triggers">
   <object id="62" x="832" y="832" width="32" height="32">
    <properties>
     <property name="enemy" value="yes"/>
@@ -41,7 +41,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#00ff00" id="2" name="Blocking" visible="0">
+ <objectgroup color="#00ff00" id="2" name="Blocking">
   <object id="13" name="Земля" x="0" y="1082.18" width="1920" height="65">
    <properties>
     <property name="blockers" value="tblr"/>

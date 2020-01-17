@@ -13,6 +13,7 @@ class Game:
         self.sprites = tmx.SpriteLayer()
         self.player = None
         self.enemies = tmx.SpriteLayer()
+        self.boss = tmx.SpriteLayer()
         self.fps = 60
         self.is_GameOver = False
         # загрузака полос: здоровья, маны и выносливости
@@ -66,6 +67,10 @@ class Game:
         for enemy in self.tile_map.layers['Triggers'].find('enemy'):
             Enemy((enemy.px, enemy.py), self.enemies)
         self.tile_map.layers.append(self.enemies)
+        #
+        # for bos in self.tile_map.layers['Triggers'].find('boss'):
+        #     Boss((bos.px, bos.py), self.boss)
+        # self.tile_map.layers.append(self.boss)
 
         while 1:
             dt = clock.tick(self.fps)  # задержка игрового цикла
@@ -153,9 +158,9 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.terminate()
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    self.clicked_enter = False
+                    self.clicked_enter = True
             if self.clicked_enter is False:
-                self.start_screen2(display.set_mode((900, 600)))
+                self.start_screen2(screen)
                 break
             pygame.display.flip()
             clock.tick(self.fps)

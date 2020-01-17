@@ -44,3 +44,46 @@ class Enemy(sprite.Sprite):
             self.direction *= -1
             break
         self.set_frame(dt)
+
+
+class Boss(sprite.Sprite):
+    def __init__(self, location, *groups):
+        super().__init__(*groups)
+        self.location = location
+        self.SpriteSheet_attack = load_image('Boss/attack.png')
+        self.SpriteSheet_idle = load_image('Boss/idle.png')
+
+        self.frames = {'idle': get_list_sprites(self.SpriteSheet_idle, 0, 6, 640, 576),
+                       'attack': get_list_sprites(self.SpriteSheet_attack, 0, 8, 960, 768)}
+        self.image = self.frames['idle'][0]
+        self.rect = Rect(location, self.image.get_size())
+        self.HP = 500
+        self.is_attack = True
+
+        self.update_rate = 0.1  # скорость обновления анимации в секунадх
+        self.timer_of_update = 0  # таймер обновлений
+        self.frame_number_IDLE = 0  # номера кадров
+        self.frame_number_Attack = 0  # номера кадров
+
+    def set_frame(self, dt):
+        self.timer_of_update += dt
+        if self.timer_of_update >= self.update_rate:
+            self.timer_of_update = 0
+            if self.is_attack:
+                self.image = self.frames['attack'][self.frame_number_Attack]
+                self.frame_number_Attack = (self.frame_number_Attack + 1) % len(self.frames['attack'])
+                self.rect = Rect(self.location, self.image.get_size())
+                if self.frame_number_Attack ==0:
+                    self.is_attack = False
+            else:
+                self.image = self.frames['idle'][self.frame_number_IDLE]
+                self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames['idle'])
+                self.rect = Rect(self.location, self.image.get_size())
+                if self.frame_number_IDLE ==0:
+                    self.is_attack = True
+
+    def update(self, dt, game):
+        if self.HP <= 0:
+            self.kill()
+
+        self.set_frame(dt)

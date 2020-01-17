@@ -43,7 +43,7 @@ class Player(sprite.Sprite):
         # длительность эффектов
         self.duration_of_immunity = 2  # иммунитет
         # перезарядка способностей
-        self.spell_cooldown = 1  # заклинание (ЛКМ)
+        self.spell_cooldown = 1.5  # заклинание (ЛКМ)
         # таймеры способностей
         self.timer_of_immunity = 0  # иммунитет
         self.timer_of_stun = 0  # оглушение
@@ -158,6 +158,7 @@ class Player(sprite.Sprite):
                                 self.timer_of_update = 0
 
     def cast_spell(self, game, damage):
+
         if self.direction == 1:
             x, y = self.rect.right, self.rect.top
         else:
@@ -242,16 +243,18 @@ class Player(sprite.Sprite):
             if self.timer_of_spell > 0:  # перезарядка способности
                 self.timer_of_spell -= dt
             else:
-                if self.left_MouseButton and self.on_the_ground and not self.is_stun:  # начало каста способности
+                if self.left_MouseButton and self.on_the_ground and not self.is_stun and self.MANA >= 25:  # начало каста способности
                     self.is_SpellCast = True
                     self.timer_of_spell = self.spell_cooldown
                     self.frame_number_SPELL = 2
                     self.timer_of_update = 0
+                    self.MANA -= 60
                     if self.direction == 1:  # начало анимации способности
                         self.image = self.frames_right['spell'][1]
                     else:
                         self.image = self.frames_right['spell'][1]
-
+            if self.MANA < self.max_mana:
+                self.MANA += 0.5
             # определение столкновений героя с платформами
             new = self.rect
             new_masc = self.mask_for_platform
