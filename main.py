@@ -104,9 +104,15 @@ class Game:
             else:
                 if not self.is_GameOver:
                     self.is_GameOver = True
-                    s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
-                    s.fill((0, 0, 0, 128))  # notice the alpha value in the color
+                    s = pygame.Surface((900, 600), pygame.SRCALPHA)
+                    s.fill((0, 0, 0, 128))
                     screen.blit(s, (0, 0))
+                    font.init()
+                    my_font = font.Font('data/fonts/17810.ttf', 100)
+                    string_rendered = my_font.render(u'GAME OVER', 1, (47, 79, 79))
+                    screen.blit(string_rendered, (120, 270))
+
+
             # обновление экрана
             display.flip()
             display.update()
@@ -150,9 +156,7 @@ class Game:
 
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.terminate()
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     self.clicked_enter = False
             if self.clicked_enter is False:
                 self.start_screen2(display.set_mode((900, 600)))
@@ -219,8 +223,8 @@ class Game:
                 if self.frame_nomber_MAIN_MENU == 0:
                     self.direction_MainMenu *= -1
                 self.timer_of_update_MainMenu = 0
-                s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
-                s.fill((0, 0, 0, 128))  # notice the alpha value in the color
+                s = pygame.Surface((900, 600), pygame.SRCALPHA)
+                s.fill((0, 0, 0, 128))
                 screen.blit(s, (0, 0))
             intro_text = ["", "",
                           "В нашей игре ведьма Моргана сталкивается",
