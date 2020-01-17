@@ -77,6 +77,7 @@ class Player(sprite.Sprite):
 
         self.left_MouseButton = False  # нажата ли ЛКМ?
         self.Space_click = False
+        self.abilities = [False, False, False]  # 0 - прыжок, 1 - фаэрбол, 2 - полет
 
     # обновление анимации
     def set_frame(self, dt, game):
@@ -158,7 +159,6 @@ class Player(sprite.Sprite):
                                 self.timer_of_update = 0
 
     def cast_spell(self, game, damage):
-
         if self.direction == 1:
             x, y = self.rect.right, self.rect.top
         else:
@@ -203,7 +203,8 @@ class Player(sprite.Sprite):
                 self.is_move = False
 
             # начало прыжка
-            if self.on_the_ground and keys[K_SPACE] and not self.is_stun and not self.is_SpellCast:
+            if self.on_the_ground and keys[K_SPACE] and not self.is_stun and not self.is_SpellCast and self.abilities[
+                0]:
                 self.gravity()
                 self.on_the_ground = False
                 self.is_jump = True
@@ -220,7 +221,7 @@ class Player(sprite.Sprite):
             # падение героя если находится в воздухе
             if not self.on_the_ground:
                 if self.is_jump and keys[K_SPACE] and not self.is_stun and self.Space_click and (
-                        self.STAMINA > 25 or self.is_fly):  # полёт
+                        self.STAMINA > 25 or self.is_fly) and self.abilities[2]:  # полёт
                     self.is_fly = True
                     self.STAMINA -= 1.5
                     if self.STAMINA <= 0:
@@ -243,7 +244,8 @@ class Player(sprite.Sprite):
             if self.timer_of_spell > 0:  # перезарядка способности
                 self.timer_of_spell -= dt
             else:
-                if self.left_MouseButton and self.on_the_ground and not self.is_stun and self.MANA >= 25:  # начало каста способности
+                if self.left_MouseButton and self.on_the_ground and not self.is_stun and self.MANA >= 60 and \
+                        self.abilities[1]:  # начало каста способности
                     self.is_SpellCast = True
                     self.timer_of_spell = self.spell_cooldown
                     self.frame_number_SPELL = 2
@@ -253,7 +255,7 @@ class Player(sprite.Sprite):
                         self.image = self.frames_right['spell'][1]
                     else:
                         self.image = self.frames_right['spell'][1]
-            if self.MANA < self.max_mana:
+            if self.MANA <= self.max_mana:
                 self.MANA += 0.5
             # определение столкновений героя с платформами
             new = self.rect
@@ -261,7 +263,6 @@ class Player(sprite.Sprite):
             self.on_the_ground = False
             for cell in game.tile_map.layers['Blocking'].collide(new_masc, 'blockers'):
                 blockers = cell['blockers']
-                # print(blockers)
                 if 'l' in blockers and last_masc.right <= cell.left < new_masc.right:  # left
                     new.right = cell.left + 23
                     new_masc.right = cell.left
@@ -316,9 +317,10 @@ class Player(sprite.Sprite):
             if self.timer_of_immunity > 0:
                 self.timer_of_immunity -= dt
 
-            # пересечение с врагами по макам
+            # пересечение с врагами по маскам
             for enemy in sprite.spritecollide(self, game.enemies, False):
-                if sprite.collide_mask(self, enemy) and self.timer_of_immunity <= 0 and not self.is_dead:
+                if sprite.collide_mask(self,
+                                       enemy) and self.timer_of_immunity <= 0 and not enemy.is_dead:
                     self.take_damage.play()
                     self.timer_of_stun = enemy.stun
                     self.timer_of_immunity = self.duration_of_immunity
@@ -337,8 +339,13 @@ class Player(sprite.Sprite):
                     else:
                         self.image = self.frames_left['damage'][1]
                         self.timer_of_update = 0
-            game.tile_map.set_focus(new.x, new.y)  # камера
 
+            game.tile_map.set_focus(new.x, new.y)  # камера
+            for book in sprite.spritecollide(self, game.books, False):
+                if sprite.collide_mask(self, book):
+                    self.abilities[book.ability] = True
+                    book.is_use = True
+                    print(self.abilities)
         self.set_frame(dt, game)
 
 
@@ -349,6 +356,7 @@ class FireBall(sprite.Sprite):
         self.SpriteSheet = load_image('Witch/FireBall_3_64x64.png')
         self.frames_right = get_list_sprites(self.SpriteSheet, 0, 60, 64, 64)
         self.frames_left = list(map(lambda im: transform.flip(im, True, False), self.frames_right))
+        self.frames_collision = get_list_sprites(load_image('Witch/FireCast_96x96.png'), 0, 28, 96, 96)
         self.direction = direction
         self.image = None
         if self.direction == 1:
@@ -357,28 +365,88 @@ class FireBall(sprite.Sprite):
             self.image = self.frames_left[0]
         self.rect = Rect(location, self.image.get_size())
         self.damage = damage
-        self.lifespan = 3
-        self.update_rate = 0.05  # скорость обновления анимации в секунадх
+        self.lifespan = 2
+        self.update_rate = 0.02  # скорость обновления анимации в секунадх
         self.timer_of_update = 0  # таймер обновлений
         self.frame_number_IDLE = 1  # номера кадров
+        self.frame_number_collision = 0  # номера кадров
+        self.is_collision = False
 
     def set_frame(self, dt):
         self.timer_of_update += dt
         if self.timer_of_update >= self.update_rate:
-            if self.direction == 1:
-                self.image = self.frames_right[self.frame_number_IDLE]
+            self.timer_of_update = 0
+            if self.is_collision:
+                self.image = self.frames_collision[self.frame_number_collision]
+                self.frame_number_collision = (self.frame_number_collision + 1) % len(self.frames_collision)
+                if self.frame_number_collision == 0:
+                    self.kill()
             else:
-                self.image = self.frames_left[self.frame_number_IDLE]
-            self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_right)
+                if self.direction == 1:
+                    self.image = self.frames_right[self.frame_number_IDLE]
+                else:
+                    self.image = self.frames_left[self.frame_number_IDLE]
+                self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_right)
 
     def update(self, dt, game):
+        last = self.rect.copy()
         self.lifespan -= dt
-        if self.lifespan < 0:
-            self.kill()
-            return
-        self.rect.x += self.direction * 10
+        if not self.is_collision:
+            if self.lifespan < 0:
+                self.is_collision = True
+            self.rect.x += self.direction * 10
+            new = self.rect
 
-        for enemy in sprite.spritecollide(self, game.enemies, False):
-            enemy.HP -= self.damage
-            self.kill()
+            for cell in game.tile_map.layers['Blocking'].collide(self.rect, 'blockers'):
+                blockers = cell['blockers']
+                if 'l' in blockers and last.right <= cell.left < new.right:  # left
+                    self.is_collision = True
+                if 'r' in blockers and last.left >= cell.right > new.left:  # right
+                    self.is_collision = True
+
+            for enemy in sprite.spritecollide(self, game.enemies, False):
+                enemy.HP -= self.damage
+                self.is_collision = True
+                enemy.is_hit = True
+            if self.is_collision:
+                self.rect.move(-15, -15)
+                self.rect.width = 96
+                self.rect.height = 96
         self.set_frame(dt)
+
+
+class Book(sprite.Sprite):
+    def __init__(self, location, ability, *groups):
+        super().__init__(*groups)  # добавление к группе спрайтов
+        self.frames = [load_image('Book/1.png'),
+                       load_image('Book/2.png'),
+                       load_image('Book/3.png'),
+                       load_image('Book/4.png')]
+        self.image = self.frames[0]
+        self.rect = Rect(location, self.image.get_size())
+        self.mask = mask.from_surface(self.image)
+        self.update_rate = 0.2  # скорость обновления анимации в секунадх
+        self.timer_of_update = 0  # таймер обновлений
+        self.frame_number_IDLE = 1  # номера кадров
+        self.is_use = False
+        self.ability = ability
+        self.direction = -1
+        self.distance = 0
+
+    def update(self, dt, game):
+        self.timer_of_update += dt
+        if self.is_use:
+            if self.frame_number_IDLE == 0:
+                self.kill()
+            if self.timer_of_update >= self.update_rate:
+                self.image = self.frames[self.frame_number_IDLE]
+                self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames)
+
+        else:
+            if self.timer_of_update >= 0.05:
+                self.timer_of_update = 0
+                self.rect.y += 1 * self.direction
+                self.distance += 1
+                if self.distance >= 10:
+                    self.distance = 0
+                    self.direction *= -1

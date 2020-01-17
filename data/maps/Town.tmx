@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="96">
+ <tileset firstgid="1" name="background3" tilewidth="32" tileheight="32" tilecount="1728" columns="48">
+  <image source="../tiles/background3.png" width="1536" height="1152"/>
+ </tileset>
+ <tileset firstgid="1729" name="middleground2" tilewidth="32" tileheight="32" tilecount="972" columns="36">
+  <image source="../tiles/middleground2.png" width="1152" height="864"/>
+ </tileset>
+ <tileset firstgid="2701" name="tileset2" tilewidth="32" tileheight="32" tilecount="444" columns="37">
+  <image source="../tiles/tileset2.png" width="1184" height="384"/>
+ </tileset>
+ <tileset firstgid="3145" name="houses" tilewidth="32" tileheight="32" tilecount="731" columns="43">
+  <image source="../tiles/houses.png" width="1376" height="544"/>
+ </tileset>
+ <tileset firstgid="3876" name="prrrops" tilewidth="32" tileheight="32" tilecount="264" columns="22">
+  <image source="../tiles/prrrops.png" width="704" height="384"/>
+ </tileset>
+ <layer id="5" name="Слой тайлов 1" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer id="6" name="Слой тайлов 2" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer id="7" name="Слой тайлов 3" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHtmEtLlVEUhj/MlDSjqEFlaleiy88obzUvov5BZB41CWpQP6ASu4Aej9a8UReiyzCP51gQjSqxUioadTObdXk2uHCzPCccGHXyXfCw915+HeRxve4+k0QlAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzJQyMC5qiQ5DxegB3qLcIn+ZVDJwGIycIOZvwm34DbcKcJd+vdAJQOLycAzZv45vIAxGC/CK/qvQSUDpW5gXU2SrIda2AB1UA8N4Os7M/8DfobZr06SsiKU018KKhkodQN7yMFeaIQmaIYWaAVfm5n5LbAVtsH2IuygvxNUMlDqBtrIwXFohxR0QCd0ga+jzPzYDG2sVyDlCL2ToJKB/8FAHznohzQMQAYGYQh89TD3lo+LLhchJ/f5f9cDyCgfXp3OJWrgITkYhiyMQA7yMAq+7P44xvyH+8PuDrtHJsjGJOj+8OZ0LlUDn8jBZ/gCU/AVpuEb+LL7o5dshPvDcmE5qaBXCbo/vDmdS9VA7Qr+bgV1UA8NsBE2ga9C94dl5Dq52AW7oRusDrA/CIcchzkfAZUM/MsGGslBEzRDC7TCPtgPvvz9YffGE+b8KfRBP6TB6hT709HZ+mfonZ3p+wwpO2ZJ69820E4OUtABndAFJ6AbfNm7efz+McWMT0PIit0l8fvHMP0s+Ir7PkPFsqPceIs6/2kDaXIwABkYhCG4CtfAl+XD3j9CJtYun31Pt/skfv+IcxB/XtyP9+GZ+Bxnp1BulJnYqvYLbSBLDkYgB3kYhUfwGHxZPsbJxUsI98UETMIbeAvv4D1YxbNuvbDG/Xj/u6/Fz1lu4szEn6+9DCyEgRyznIf5rAl3RaAMlkA5VEAlLIMqqIYasM9byX5VdC7Ut2fs+4jPtg//zvbhOdvbap+rdf4/T/OtdXZe/fx8YNY+glZ50BzMzcFqfrevAa3yoDmYm4NfHfoc2A==
+  </data>
+ </layer>
+ <layer id="11" name="Слой тайлов 4" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt2LcyRHEUgPH7AqjlSnoGaeTQSYNC6KRhsbs6qcUTiEvlCeh0wkqVF8ALyFbn25mt7Yxu535n5je3+Gt8c06zQeBYwAIWsIAFLGABC1jAAhawgAUsYAELWMACFrCABSxgAQtYwAIWsIAFLGABC1jAAhawgAUsYAELWMACFrCABSxgAQtYwAIWsIAFLGABC1jAAhawgAUsYAELWMACFvhfgcK8IChCMUpQijKUw7FA2Au0cgdtaEcHOtGFbjgWCHuBCHcwjwUsIooY4nAsEPYC29zBDnaxh30cIAHHAmEvcM4dXOASV0jiGjcYKQiCUYxhHI4FwlbghTt4xRve8YFPfCHKTcQQx5L3EbbV8P+lQHE+v1uhFGUoRxO30IwWbGATW3AsELYC7dxDBzrRhW4McgtDGEYChzjCX1PBe1olqlCNGjgWyOUCC9zDIqKIIY5Z9noOEZzgFNmmlr9Jq0M9GtAIxwK5XGCXe9jDPg6QwCGOcMN+3+IO93/s+nHmrYdvL/rQjwE4FsjlApfcwRWSuE7fBG5xh0f2+wnPWfb8LPM+wXcSU5jGDBwL5HKBN+7gHR/4xBe+kUp/2e8UfrLs+UPmfZnvClaxhnU4FrCABSxgAQtYIGwFfgGXrFG5
+  </data>
+ </layer>
+ <objectgroup color="#55ffff" id="9" name="Triggers" visible="0">
+  <object id="62" x="832" y="832" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="67" x="768" y="864" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="68" x="992" y="864" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="75" name="книга" x="544" y="1024" width="32" height="32">
+   <properties>
+    <property name="book" value="0"/>
+   </properties>
+  </object>
+  <object id="76" name="книга" x="640" y="864" width="32" height="32">
+   <properties>
+    <property name="book" value="1"/>
+   </properties>
+  </object>
+  <object id="80" x="1152" y="864" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="81" x="1344" y="896" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="82" x="1504" y="928" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="83" x="1056" y="896" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="84" x="1216" y="896" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="85" x="1280" y="928" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="86" x="1408" y="928" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="87" x="1440" y="960" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="88" x="1600" y="960" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="89" x="849" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="90" x="1028" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="91" x="1252" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="92" x="756.667" y="1046" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="93" x="942.667" y="1048" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="94" x="1148.67" y="1050.67" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="95" x="1538.67" y="1047.33" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#00ff00" id="2" name="Blocking" visible="0">
+  <object id="13" name="Земля" x="0" y="1082" width="6400" height="65">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="45" x="512.135" y="1000.03" width="11.8394" height="20.375">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="46" x="524.008" y="985.993" width="16.1186" height="16.1477">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="47" x="540.057" y="968.036" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="48" x="556.052" y="953.972" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="49" x="571.99" y="936.045" width="16.2253" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="50" x="588.063" y="924.048" width="19.9882" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="51" x="608.074" y="916.012" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="55" x="768" y="896" width="256" height="24.3333">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="56" x="1056" y="928" width="192" height="23">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="57" x="1280" y="960" width="160" height="24">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="58" x="1472" y="992" width="128" height="24">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="70" name="Граница" x="6400" y="0" width="-1" height="1152">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="71" name="Граница" x="0" y="0" width="6400" height="1">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="73" name="Граница" x="0" y="0" width="1" height="1152">
+   <properties>
+    <property name="blockers" value="tblr "/>
+   </properties>
+  </object>
+  <object id="74" name="Граница" x="0" y="1152" width="6400" height="-1">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="77" x="608" y="1017.85" width="145.667" height="70.1515">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="79" x="642.03" y="952.212" width="77.9697" height="67.1212">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#aa55ff" id="3" name="Spawn" visible="0">
+  <object id="6" name="spawn" x="96" y="992" width="32" height="32">
+   <properties>
+    <property name="player" value="yes"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

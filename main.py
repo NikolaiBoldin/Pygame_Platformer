@@ -15,6 +15,7 @@ class Game:
         self.enemies = tmx.SpriteLayer()
         self.fps = 60
         self.is_GameOver = False
+        self.books = tmx.SpriteLayer()
         # загрузака полос: здоровья, маны и выносливости
         self.HealthBar = load_image('Health Bar/Health.png')
         self.ManaBar = load_image('Health Bar/Mana.png')
@@ -52,69 +53,6 @@ class Game:
 
     # def show_text(self, screen, text):
 
-    def main(self, screen):
-        clock = time.Clock()
-
-        mouse.set_visible(False)  # мышь не отображается
-        self.tile_map = load_map('Dark swamps.tmx')
-
-        start_cell = self.tile_map.layers['Spawn'].find('player')[0]
-
-        self.player = Player((start_cell.px, start_cell.py), self.sprites)
-        self.tile_map.layers.append(self.sprites)
-
-        for enemy in self.tile_map.layers['Triggers'].find('enemy'):
-            Enemy((enemy.px, enemy.py), self.enemies)
-        self.tile_map.layers.append(self.enemies)
-        #
-        # for bos in self.tile_map.layers['Triggers'].find('boss'):
-        #     Boss((bos.px, bos.py), self.boss)
-        # self.tile_map.layers.append(self.boss)
-
-        while 1:
-            dt = clock.tick(self.fps)  # задержка игрового цикла
-            self.player.left_MouseButton = False
-
-            for ev in event.get():
-                if ev.type == QUIT:
-                    return
-                if ev.type == KEYDOWN and ev.key == K_ESCAPE:
-                    return
-                if ev.type == MOUSEBUTTONDOWN and ev.button == 1:
-                    self.player.left_MouseButton = True
-                if ev.type == KEYDOWN and ev.key == K_SPACE:
-                    self.player.Space_click = True
-
-            if not self.player.is_GameOver:
-                self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
-                screen.fill(Color("black"))
-                self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
-                # смещение полос
-                self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
-                self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.MANA / self.player.max_mana)
-                self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (
-                        self.player.STAMINA / self.player.max_stamina)
-                # отрисовка полос
-                screen.blit(self.BG_Bar, self.coord_BG_Bar1)
-                screen.blit(self.BG_Bar, self.coord_BG_Bar2)
-                screen.blit(self.BG_Bar, self.coord_BG_Bar3)
-                screen.blit(self.HealthBar, self.coord_HealthBar,
-                            ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
-                screen.blit(self.ManaBar, self.coord_ManaBar,
-                            ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
-                screen.blit(self.StaminaBar, self.coord_StaminaBar,
-                            ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
-
-            else:
-                if not self.is_GameOver:
-                    self.is_GameOver = True
-                    s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
-                    s.fill((0, 0, 0, 128))  # notice the alpha value in the color
-                    screen.blit(s, (0, 0))
-            # обновление экрана
-            display.flip()
-            display.update()
-
     def terminate(self):
         pygame.quit()
         sys.exit()
@@ -128,8 +66,12 @@ class Game:
     def action3(self):
         self.clicked_control = False
 
+    def action4(self):
+        self.clicked_enter = False
+
     def screen_control(self, screen):
         clock = time.Clock()
+        self.clicked_enter = True
         fon = pygame.transform.scale(load_image('Main menu BG/fon_dark_control.jpg'), (900, 600))
         screen.blit(fon, (0, 0))
         pygame.font.init()
@@ -151,18 +93,19 @@ class Game:
             intro_rect.x = 180
             text_coord += intro_rect.height
             screen.blit(string_rendered, intro_rect)
-
+        pygame.display.flip()
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.terminate()
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    self.clicked_enter = False
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    self.action4()
+                if event.type == QUIT:
+                    return
+                if event.type == KEYDOWN and event.key == K_ESCAPE:
+                    return
             if self.clicked_enter is False:
-                self.start_screen2(screen)
                 break
-            pygame.display.flip()
-            clock.tick(self.fps)
+        if self.clicked_enter is False:
+            self.start_screen2(disp)
 
     def button_control(self, x, y, width_b, height_b, screen):
         mouse = pygame.mouse.get_pos()
@@ -187,7 +130,7 @@ class Game:
             pygame.draw.rect(screen, (95, 158, 160), (x, y, width_b, height_b))
             if click_mouse[0] == 1:
                 self.action2()
-                self.main(screen)
+                self.level1(screen)
         else:
             pygame.draw.rect(screen, (47, 79, 79), (x, y, width_b, height_b))
         font_b = pygame.font.Font('data/fonts/17810.ttf', 26)
@@ -200,7 +143,8 @@ class Game:
         font.init()
         my_font = font.Font('data/fonts/17810.ttf', 60)
         string_rendered = my_font.render(u'Witch adventure', 1, (47, 79, 79))
-
+        self.clicked_go_over_game = True
+        self.clicked_control = True
         while True:
             dt = clock.tick(60) / 1000
             clock.tick(self.fps)
@@ -228,9 +172,8 @@ class Game:
                 screen.blit(s, (0, 0))
             intro_text = ["", "",
                           "В нашей игре ведьма Моргана сталкивается",
-                          " с разными испытаниями. На каждом уровне ",
-                          "её ждет новое задание. Чтобы получить метлу, ",
-                          "Ключ от тайной комнаты и суперспособности, ",
+                          " с разными испытаниями. Чтобы получить метлу, ",
+                          "ключ от тайной комнаты и суперспособности, ",
                           "Моргане придется бороться с монстрами и идти ",
                           "в нужном направлении. Но Моргана не сдается ",
                           "несмотря на все трудности."]
@@ -304,6 +247,143 @@ class Game:
             screen.blit(string_rendered, (200, 50))
             if self.clicked_start_game is False:
                 break
+            display.flip()
+            display.update()
+
+    def level1(self, screen):
+        clock = time.Clock()
+
+        mouse.set_visible(False)  # мышь не отображается
+        self.tile_map = load_map('Town.tmx')
+
+        start_cell = self.tile_map.layers['Spawn'].find('player')[0]
+        self.player = Player((start_cell.px, start_cell.py), self.sprites)
+        self.tile_map.layers.append(self.sprites)
+
+        for enemy in self.tile_map.layers['Triggers'].find('enemy'):
+            Skeleton((enemy.px, enemy.py), self.enemies)
+
+        self.tile_map.layers.append(self.enemies)
+
+        for book in self.tile_map.layers['Triggers'].find('book'):
+            Book((book.px, book.py),book['book'], self.books)
+
+        self.tile_map.layers.append(self.books)
+
+        while 1:
+            dt = clock.tick(self.fps)  # задержка игрового цикла
+            self.player.left_MouseButton = False
+
+            for ev in event.get():
+                if ev.type == QUIT:
+                    return
+                if ev.type == KEYDOWN and ev.key == K_ESCAPE:
+                    return
+                if ev.type == MOUSEBUTTONDOWN and ev.button == 1:
+                    self.player.left_MouseButton = True
+                if ev.type == KEYDOWN and ev.key == K_SPACE:
+                    self.player.Space_click = True
+
+            if not self.player.is_GameOver:
+                self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
+                screen.fill(Color("black"))
+                self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
+                # смещение полос
+                self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
+                self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.MANA / self.player.max_mana)
+                self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (
+                        self.player.STAMINA / self.player.max_stamina)
+                # отрисовка полос
+                screen.blit(self.BG_Bar, self.coord_BG_Bar1)
+                screen.blit(self.BG_Bar, self.coord_BG_Bar2)
+                screen.blit(self.BG_Bar, self.coord_BG_Bar3)
+                screen.blit(self.HealthBar, self.coord_HealthBar,
+                            ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
+                screen.blit(self.ManaBar, self.coord_ManaBar,
+                            ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
+                screen.blit(self.StaminaBar, self.coord_StaminaBar,
+                            ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+
+            else:
+                if not self.is_GameOver:
+                    self.is_GameOver = True
+                    s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
+                    s.fill((0, 0, 0, 128))  # notice the alpha value in the color
+                    screen.blit(s, (0, 0))
+                    font.init()
+                    my_font = font.Font('data/fonts/17810.ttf', 100)
+                    string_rendered = my_font.render(u'GAME OVER', 1, (47, 79, 79))
+                    screen.blit(string_rendered, (120, 270))
+
+            # обновление экрана
+            display.flip()
+            display.update()
+
+    def level2(self, screen):
+        clock = time.Clock()
+
+        mouse.set_visible(False)  # мышь не отображается
+        self.tile_map = load_map('Dark swamps.tmx')
+
+        start_cell = self.tile_map.layers['Spawn'].find('player')[0]
+
+        self.player = Player((start_cell.px, start_cell.py), self.sprites)
+        self.tile_map.layers.append(self.sprites)
+
+        for enemy in self.tile_map.layers['Triggers'].find('enemy'):
+            Enemy((enemy.px, enemy.py), self.enemies)
+        self.tile_map.layers.append(self.enemies)
+        #
+        # for bos in self.tile_map.layers['Triggers'].find('boss'):
+        #     Boss((bos.px, bos.py), self.boss)
+        # self.tile_map.layers.append(self.boss)
+
+        while 1:
+            dt = clock.tick(self.fps)  # задержка игрового цикла
+            self.player.left_MouseButton = False
+
+            for ev in event.get():
+                if ev.type == QUIT:
+                    return
+                if ev.type == KEYDOWN and ev.key == K_ESCAPE:
+                    return
+                if ev.type == MOUSEBUTTONDOWN and ev.button == 1:
+                    self.player.left_MouseButton = True
+                if ev.type == KEYDOWN and ev.key == K_SPACE:
+                    self.player.Space_click = True
+
+            if not self.player.is_GameOver:
+                self.tile_map.update(dt / 1000, self)  # обновление всех груп спрайтов добавленных к self.tile_map
+                screen.fill(Color("black"))
+                self.tile_map.draw(screen)  # отрисовка всех груп спрайтов добавленных к self.tile_map
+                # смещение полос
+                self.offset_health = self.size_bar[0] - self.size_bar[0] * (self.player.HP / self.player.max_HP)
+                self.offset_mana = self.size_bar[0] - self.size_bar[0] * (self.player.MANA / self.player.max_mana)
+                self.offset_stamina = self.size_bar[0] - self.size_bar[0] * (
+                        self.player.STAMINA / self.player.max_stamina)
+                # отрисовка полос
+                screen.blit(self.BG_Bar, self.coord_BG_Bar1)
+                screen.blit(self.BG_Bar, self.coord_BG_Bar2)
+                screen.blit(self.BG_Bar, self.coord_BG_Bar3)
+                screen.blit(self.HealthBar, self.coord_HealthBar,
+                            ((0, 0), (self.size_bar[0] - self.offset_health, self.size_bar[1])))
+                screen.blit(self.ManaBar, self.coord_ManaBar,
+                            ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
+                screen.blit(self.StaminaBar, self.coord_StaminaBar,
+                            ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+
+            else:
+                if not self.is_GameOver:
+                    self.is_GameOver = True
+                    s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
+                    s.fill((0, 0, 0, 128))  # notice the alpha value in the color
+                    screen.blit(s, (0, 0))
+                    font.init()
+                    my_font = font.Font('data/fonts/17810.ttf', 100)
+                    string_rendered = my_font.render(u'GAME OVER', 1, (47, 79, 79))
+                    screen.blit(string_rendered, (120, 270))
+
+            # обновление экрана
             display.flip()
             display.update()
 

@@ -10,5 +10,9 @@ def resize(filename1, filename2, zoom):
     pygame.image.save(image, filename2)
 
 
-resize('data/sprites/Boss/idle.png', 'data/sprites/Boss/idle.png', 4)
-# resize('data/sprites/Boss/thing2.png', 'data/sprites/Boss/thing2.png', 2)
+resize('data/sprites/Skelet/Skeleton Walk.png', 'data/sprites/Skelet/Skeleton Walk.png', 2)
+resize('data/sprites/Skelet/Skeleton React.png', 'data/sprites/Skelet/Skeleton React.png', 2)
+resize('data/sprites/Skelet/Skeleton Idle.png', 'data/sprites/Skelet/Skeleton Idle.png', 2)
+resize('data/sprites/Skelet/Skeleton Hit.png', 'data/sprites/Skelet/Skeleton Hit.png', 2)
+resize('data/sprites/Skelet/Skeleton Dead.png', 'data/sprites/Skelet/Skeleton Dead.png', 2)
+resize('data/sprites/Skelet/Skeleton Attack.png', 'data/sprites/Skelet/Skeleton Attack.png', 2)
