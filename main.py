@@ -103,9 +103,9 @@ class Game:
             else:
                 if not self.is_GameOver:
                     self.is_GameOver = True
-                    s = pygame.Surface((800, 600), pygame.SRCALPHA)  # per-pixel alpha
+                    s = pygame.Surface((900, 600), pygame.SRCALPHA)  # per-pixel alpha
                     s.fill((0, 0, 0, 128))  # notice the alpha value in the color
-                    display.blit(s, (0, 0))
+                    screen.blit(s, (0, 0))
             # обновление экрана
             display.flip()
             display.update()
