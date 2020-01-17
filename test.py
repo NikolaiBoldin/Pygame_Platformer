@@ -438,6 +438,14 @@ class Game:
         self.flag = True
         self.start_game = True
 
+        # анимация фона
+        self.images = [pygame.transform.scale(load_image('0.jpg'), (900, 600)),
+                       pygame.transform.scale(load_image('1.jpg'), (900, 600)),
+                       pygame.transform.scale(load_image('2.jpg'), (900, 600)),
+                       pygame.transform.scale(load_image('3.jpg'), (900, 600)),
+                       pygame.transform.scale(load_image('4.jpg'), (900, 600)),
+                       pygame.transform.scale(load_image('5.jpg'), (900, 600))]
+
     def main(self, screen):
         clock = pygame.time.Clock()
         mouse.set_visible(False)
@@ -513,6 +521,10 @@ class Game:
             #     print('YOU DIED')
             #     return
 
+    def terminate(self):
+        pygame.quit()
+        sys.exit()
+
     def action1(self):
         self.flag = False
 
@@ -549,30 +561,6 @@ class Game:
         screen.blit(text, (x + 10, y + 10))
 
     def start_screen2(self, screen):
-        fon = pygame.transform.scale(load_image('fon_dark.jpg'), (900, 600))
-        screen.blit(fon, (0, 0))
-        pygame.font.init()
-        myfont = pygame.font.Font('17810.ttf', 60)
-        string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
-        screen.blit(string_rendered, (220, 50))
-        intro_text = ["", "", "", "", ""
-                                      "В нашей игре ведьма Моргана сталкивается",
-                      " с разными испытаниями. На каждом уровне ",
-                      "её ждет новое задание. Чтобы получить метлу, ",
-                      "Ключ от тайной комнаты и суперспособности, ",
-                      "Моргане придется бороться с монстрами и идти ",
-                      "в нужном направлении. Но Моргана не сдается ",
-                      "несмотря на все трудности."]
-        newfont = pygame.font.Font('17810.ttf', 20)
-        text_coord = 50
-        for line in intro_text:
-            string_rendered = newfont.render(line, 1, (176, 224, 230))
-            intro_rect = string_rendered.get_rect()
-            text_coord += 10
-            intro_rect.top = text_coord
-            intro_rect.x = 180
-            text_coord += intro_rect.height
-            screen.blit(string_rendered, intro_rect)
 
         while True:
             for event in pygame.event.get():
@@ -585,6 +573,31 @@ class Game:
             self.button_game(520, 500, 230, 50, screen)
             if self.start_game is False:
                 break
+            for i in self.images:
+                fon = i
+                screen.blit(fon, (0, 0))
+                pygame.font.init()
+                myfont = pygame.font.Font('17810.ttf', 60)
+                string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
+                screen.blit(string_rendered, (220, 50))
+                intro_text = ["", "", "", "", "",
+                              "В нашей игре ведьма Моргана сталкивается",
+                              " с разными испытаниями. На каждом уровне ",
+                              "её ждет новое задание. Чтобы получить метлу, ",
+                              "Ключ от тайной комнаты и суперспособности, ",
+                              "Моргане придется бороться с монстрами и идти ",
+                              "в нужном направлении. Но Моргана не сдается ",
+                              "несмотря на все трудности."]
+                newfont = pygame.font.Font('17810.ttf', 20)
+                text_coord = 50
+                for line in intro_text:
+                    string_rendered = newfont.render(line, 1, (176, 224, 230))
+                    intro_rect = string_rendered.get_rect()
+                    text_coord += 10
+                    intro_rect.top = text_coord
+                    intro_rect.x = 180
+                    text_coord += intro_rect.height
+                    screen.blit(string_rendered, intro_rect)
             pygame.display.flip()
             clock.tick(FPS)
 
@@ -605,24 +618,31 @@ class Game:
         screen.blit(text, (x + 10, y + 10))
 
     def start_screen1(self, screen):
-        fon = pygame.transform.scale(load_image('fon.jpg'), (900, 600))
-        screen.blit(fon, (0, 0))
-        pygame.font.init()
-        myfont = pygame.font.Font('17810.ttf', 60)
-        string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
-        screen.blit(string_rendered, (200, 50))
-
+        i = 0
+        # s = 0
+        # dt = clock.tick(self.fps)
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.terminate()
                 elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
                     self.pause()
+            # s += dt
+            # if s == 0.0001:
+            s = 0
+            i = (i + 1) % 6
+            fon = self.images[i]
+            screen.blit(fon, (0, 0))
+            pygame.font.init()
+            myfont = pygame.font.Font('17810.ttf', 60)
+            string_rendered = myfont.render(u'Witch adventure', 1, (47, 79, 79))
+            screen.blit(string_rendered, (200, 50))
             self.button(320, 280, 240, 55, screen)
             if self.flag is False:
                 break
-            pygame.display.flip()
-            clock.tick(FPS)
+            pygame.display.update()
+        pygame.display.flip()
+        clock.tick(FPS * 10000000)
 
 
 def load_map(name):
