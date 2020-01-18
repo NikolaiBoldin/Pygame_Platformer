@@ -58,7 +58,6 @@ class Skeleton(sprite.Sprite):
                         self.image = self.frames_left['walk'][self.frame_number_WALK]
                     self.frame_number_WALK = (self.frame_number_WALK + 1) % len(self.frames_right['walk'])
 
-
     def update(self, dt, game):
         if self.HP <= 0:
             self.is_dead = True
@@ -83,16 +82,23 @@ class Enemy(sprite.Sprite):
                             load_image('Things/thing3.png'),
                             load_image('Things/thing4.png')]
         self.frames_right = list(map(lambda im: transform.flip(im, True, False), self.frames_left))
+        self.frames_death = [transform.scale(load_image('Things/1.png'), (66, 90)),
+                             transform.scale(load_image('Things/2.png'), (66, 90)),
+                             transform.scale(load_image('Things/3.png'), (66, 90)),
+                             transform.scale(load_image('Things/4.png'), (66, 90)),
+                             transform.scale(load_image('Things/5.png'), (66, 90)),
+                             transform.scale(load_image('Things/6.png'), (66, 90))]
         self.image = self.frames_right[1]
         self.rect = Rect(location, self.image.get_size())
         self.direction = 1
         self.mask = mask.from_surface(self.image)
         self.damege = 30
         self.stun = 1
-        self.HP = 60
-        self.update_rate = 0.2  # скорость обновления анимации в секунадх
+        self.HP = 10
+        self.update_rate = 0.15  # скорость обновления анимации в секунадх
         self.timer_of_update = 0  # таймер обновлений
         self.frame_number_IDLE = 0  # номера кадров
+        self.frame_number_DEATH = 0  # номера кадров
         self.is_hit = False
         self.is_dead = False
 
@@ -100,23 +106,31 @@ class Enemy(sprite.Sprite):
         self.timer_of_update += dt
         if self.timer_of_update >= self.update_rate:
             self.timer_of_update = 0
-            if self.direction == 1:
-                self.image = self.frames_right[self.frame_number_IDLE]
+            if self.is_dead:
+
+                self.image = self.frames_death[self.frame_number_DEATH]
+                self.frame_number_DEATH = (self.frame_number_DEATH + 1) % len(self.frames_death)
+                if self.frame_number_DEATH == 0:
+                    self.kill()
             else:
-                self.image = self.frames_left[self.frame_number_IDLE]
-            self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_left)
+                if self.direction == 1:
+                    self.image = self.frames_right[self.frame_number_IDLE]
+                else:
+                    self.image = self.frames_left[self.frame_number_IDLE]
+                self.frame_number_IDLE = (self.frame_number_IDLE + 1) % len(self.frames_left)
 
     def update(self, dt, game):
         if self.HP <= 0:
-            self.kill()
-        self.rect.x += self.direction * 1
-        for cell in game.tile_map.layers['Triggers'].collide(self.rect, 'reverse'):
-            if self.direction == 1:
-                self.rect.right = cell.left
-            else:
-                self.rect.left = cell.right
-            self.direction *= -1
-            break
+            self.is_dead = True
+        if not self.is_dead:
+            self.rect.x += self.direction * 1
+            for cell in game.tile_map.layers['Triggers'].collide(self.rect, 'reverse'):
+                if self.direction == 1:
+                    self.rect.right = cell.left
+                else:
+                    self.rect.left = cell.right
+                self.direction *= -1
+                break
         self.set_frame(dt)
 
 
