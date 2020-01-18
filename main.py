@@ -72,7 +72,6 @@ class Game:
         self.clicked_enter = False
 
     def screen_control(self, screen):
-        clock = time.Clock()
         self.clicked_enter = True
         fon = pygame.transform.scale(load_image('Main menu BG/fon_dark_control.jpg'), (900, 600))
         screen.blit(fon, (0, 0))
@@ -430,4 +429,4 @@ def load_map(name):
 if __name__ == '__main__':
     init()
     disp = display.set_mode((900, 600))
-    Game().level2(disp)
+    Game().main_menu(disp)
