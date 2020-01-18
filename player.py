@@ -291,6 +291,8 @@ class Player(sprite.Sprite):
                 if 'Die' in blockers:
                     self.HP = 0
                     self.is_dead = True
+                if 'Win' in blockers:
+                    game.win1 = True
             # оглушение
             if self.is_stun and self.timer_of_stun > 0:
                 self.timer_of_stun -= dt
@@ -345,7 +347,6 @@ class Player(sprite.Sprite):
                 if sprite.collide_mask(self, book):
                     self.abilities[book.ability] = True
                     book.is_use = True
-                    print(self.abilities)
         self.set_frame(dt, game)
 
 

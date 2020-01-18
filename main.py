@@ -51,6 +51,8 @@ class Game:
         self.clicked_control = True
         self.clicked_enter = True
 
+        self.win1 = False
+
     # def show_text(self, screen, text):
 
     def terminate(self):
@@ -266,11 +268,14 @@ class Game:
         self.tile_map.layers.append(self.enemies)
 
         for book in self.tile_map.layers['Triggers'].find('book'):
-            Book((book.px, book.py),book['book'], self.books)
+            Book((book.px, book.py), book['book'], self.books)
 
         self.tile_map.layers.append(self.books)
-
-        while 1:
+        timer_of_text0 = 0
+        timer_of_text1 = 0
+        timer_of_text2 = 0
+        my_font = font.Font('data/fonts/17810.ttf', 20)
+        while not self.win1:
             dt = clock.tick(self.fps)  # задержка игрового цикла
             self.player.left_MouseButton = False
 
@@ -303,7 +308,21 @@ class Game:
                             ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
                 screen.blit(self.StaminaBar, self.coord_StaminaBar,
                             ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
+                if timer_of_text0 < 5:
+                    timer_of_text0 += dt / 1000
+                    string_rendered = my_font.render(u'Портал на следующий уровень в одном из колодцев.', 1,
+                                                     (220, 220, 220))
+                    screen.blit(string_rendered, (200, 25))
 
+                if self.player.abilities[0] and timer_of_text1 < 3:
+                    timer_of_text1 += dt / 1000
+                    string_rendered = my_font.render(u'Вы научились прыгать! Нажмите пробел', 1, (220, 220, 220))
+                    screen.blit(string_rendered, (10, 120))
+
+                if self.player.abilities[1] and timer_of_text2 < 3:
+                    timer_of_text2 += dt / 1000
+                    string_rendered = my_font.render(u'Вы научились колдовать! Нажмите ЛКМ', 1, (220, 220, 220))
+                    screen.blit(string_rendered, (10, 145))
             else:
                 if not self.is_GameOver:
                     self.is_GameOver = True
@@ -314,10 +333,15 @@ class Game:
                     my_font = font.Font('data/fonts/17810.ttf', 100)
                     string_rendered = my_font.render(u'GAME OVER', 1, (47, 79, 79))
                     screen.blit(string_rendered, (120, 270))
+                    my_font = font.Font('data/fonts/17810.ttf', 20)
+                    string_rendered = my_font.render(u'Вы ошиблись колодцем! или нет?', 1, (47, 79, 79))
+                    screen.blit(string_rendered, (100, 400))
 
             # обновление экрана
             display.flip()
             display.update()
+        if self.win1:
+            self.level2(disp)
 
     def level2(self, screen):
         clock = time.Clock()
@@ -326,18 +350,25 @@ class Game:
         self.tile_map = load_map('Dark swamps.tmx')
 
         start_cell = self.tile_map.layers['Spawn'].find('player')[0]
-
+        self.player = None
+        self.sprites = tmx.SpriteLayer()
         self.player = Player((start_cell.px, start_cell.py), self.sprites)
+        self.player.abilities = [True,True,False]
         self.tile_map.layers.append(self.sprites)
-
+        self.enemies= tmx.SpriteLayer()
         for enemy in self.tile_map.layers['Triggers'].find('enemy'):
             Enemy((enemy.px, enemy.py), self.enemies)
         self.tile_map.layers.append(self.enemies)
+        self.books=tmx.SpriteLayer()
+        for book in self.tile_map.layers['Triggers'].find('book'):
+            Book((book.px, book.py), book['book'], self.books)
+        self.tile_map.layers.append(self.books)
+        timer_of_text0 = 0
         #
         # for bos in self.tile_map.layers['Triggers'].find('boss'):
         #     Boss((bos.px, bos.py), self.boss)
         # self.tile_map.layers.append(self.boss)
-
+        my_font = font.Font('data/fonts/17810.ttf', 20)
         while 1:
             dt = clock.tick(self.fps)  # задержка игрового цикла
             self.player.left_MouseButton = False
@@ -371,7 +402,10 @@ class Game:
                             ((0, 0), (self.size_bar[0] - self.offset_mana, self.size_bar[1])))
                 screen.blit(self.StaminaBar, self.coord_StaminaBar,
                             ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
-
+                if self.player.abilities[2] and timer_of_text0 < 3:
+                    timer_of_text0 += dt / 1000
+                    string_rendered = my_font.render(u'Вы научились летать! Зажмите пробел в прыжке', 1, (220, 220, 220))
+                    screen.blit(string_rendered, (10, 120))
             else:
                 if not self.is_GameOver:
                     self.is_GameOver = True
@@ -396,4 +430,4 @@ def load_map(name):
 if __name__ == '__main__':
     init()
     disp = display.set_mode((900, 600))
-    Game().main_menu(disp)
+    Game().level2(disp)

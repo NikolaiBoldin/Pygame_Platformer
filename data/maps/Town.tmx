@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="96">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="228">
  <tileset firstgid="1" name="background3" tilewidth="32" tileheight="32" tilecount="1728" columns="48">
   <image source="../tiles/background3.png" width="1536" height="1152"/>
  </tileset>
@@ -32,7 +32,52 @@
  </layer>
  <layer id="11" name="Слой тайлов 4" width="200" height="36">
   <data encoding="base64" compression="zlib">
-   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
+   eAHt2keMVVUcB+ABRJSOO0UlKtUGCKJSNHYhSseBgaGLqLFRVKT33nSnNLEA0ntR2SnSe+9NdKfUART9SFgQcoW3YcIM/1/y5b05976bk985Z5KZvLS0SDQQDUQD0UA0EA1EA9FANBANRAPRQDQQDUQD0UA0EA1EA9FANBANRAPRQDQQDUQD0UA0EA1EA9FANBANRAPRQDQQDUQD0UA0EA1EA9FANBANRAPRQDQQDUQD0UA0EA1EAzduA+mF09Ka0owMmtOCTFrSita0oS3taE8kGrgZGuhnr/dnAAMZxGCGMJRhDGcEIxnFaCLRwM3QwEx7fRazmcNc5jGfBSxkEYtZwlKWEYkGboYGdtjrO9nFbvawl33s5wAHOcRhjnCUpKw2voa1rGM9G9jIJjazha1sYzuR3NfAnUXS0u6iJHdzD/dSipyWfOZ8C/m5lQLcxu0UpBCFKUJRilGcpJy238+QxVnOcZ6/+YcL/Euaz+ch7/88J+nZMZZzGnjBur7IS7zMK9SmDjktj5pzRSpRmceoQlUepxpP8CRPUZ0aJOU+4/fzAKUpQ1nKUZ4KPMhDPMwjRHJfA+9b1w/4kE50pgtdyWlpZs4ZNKcFmbSkFa1pQ1va0Z436EBSXjX+GnWpR30a0JBGNKYJr5NOUyK5r4EvrOuXjGM8E5jIJHJaBpjzQAYxmCEMZRjDGcFIRjGaMYwlKR8b/4RufEp3etCTXvSmD33pR38iua+Bn63rL6zgV1ayitVkFvP7l1a05kbPbHOew1zmMZ8FLGQRi1nCUpbxAz+SlMnGv+YbvuU7pjCVaXzPdGYwk1lEcl8Df1rXvzjOCU5yitN0dia60JWPcsD52GXOu9nDXvaxnwMc5BCHOcJRfuMYSVlrfB3r2cBGNrGZLWxlG9vZwU4iua+BkkX934p7uJdSPOssPMfzDGM4I7jRk9/cb6UAt3E7BSlEYYpQlGIUpwR3kJQs+/0s5zjP3/zDBf4lzefykJd83EIqSS/kbxUyLtPC+0wiN14DL1nXl3mF2tQh3VloSjMm8RWTuVrKuH5RWcpRngpkZyqZe2UeowpVeZxqPMGTPEV1alCTWiTlAeOlKUNZylGeCjzIQzzMIzxKRVJJD+eg5xVnoa+f+10xlsqz4p7r38CH1rUTnelCV961r9/jfRaxmGulhnsuqkktnuYZsjPNzb0FmbSkFa1pQ1va0Z436MCbdCQpdY3Xoz4NaEgjGtOE10mnKc3IIJX84hysuOIsJI2l8qy45/o3MM66jmcCE5nEV0xmtf29hrWsu8pen3rpWgOvDWlEY5qQnRlkzoMZwlCGMZwRjGQUoxnDWD7jc5LSzfindKcHPelFb/rQl370ZwADSSVJZyFpLJVnxT3Xv4EV1vVXVrKK1axhLQft70McvsY+X37p+pteO/IWb/MO2Zm55jyP+SxgIYtYzBKWsowf+JGfWE5SvjH+Ld8xhalM43umM4OZzGI2c0glSWchaSyVZ8U917+B49b1BCc5xWnOkHXx1f7O4uw19vmWS9d7eu1Fb/rQl+zMHnPeyz72c4CDHOIwRzjKbxzjd/4gKeuNb2Ajm9jMFrayje3sYCe72E0qKe47KSUufi/lsiSNXXY53kYD0UA0EA1EA9FADmvgP9FfQYI=
+  </data>
+ </layer>
+ <layer id="13" name="Слой тайлов 5" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHtmElPFFEURiuIGkHjf1AR8S84bdS900bdO8aBnQtnBVYqQePMwjFq4gQaRI2aOC8c4wQCagBx57xQAU/Ffsm18tqmsTdV9d3k5L26/ajwTu7NpQkChQzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIgAzIQBoMbCsJgu2wA2qhrkDs4j0KGYi7gQbquBEuwEVoKhDNvEchA3E38JI6fgUt0AptBaKD9yhkIO4GeqnjPugP67k0CIoKRDHvGQoKGYizgTHU8FgYB2VQXiAqeM9EUMhAnA0sp4ZDVsBKqCwQa3iPQgbibqCWOg77o65AfeH6q179EffS0O+PATs/dnt6JMxF8+4522dhXvND5ZUEA3Z+2Lp3c2Cwq+ZHEqpDd7DzI9/vH5ofqp+kG3D9EX7/2Gn+vvpX7Q9kpmh+JL1y0nE/1x++/1+5v7dsP2TL2Xy41/ePdNRP0m9pv3+4+WFr3faG3fvOuFy4an4kvXLScT/f/HB1HvaD3bv+CHO+vP1c8yMd9ZP0W0bnh6/us+V8edcjmh9Jr5x432/T6CDYDFtgK1RBNdSADd/8cDX+P6vmh7Ws/UAMHKI2D8MROArH4DjkE2WcHw/lMAEqwJfbQ34v7IP9cAAOQj3YiM6PsCfsXLD7fPpF88Na1n4gBpqozUvQDJfhClyFfGIS5yfDFJgK08CXO03+DJyFc3AeGqARbNj5Ea3/wfZG+HOaH9ay9j4D06nFGTAzU5MPWB/CI3gMT+Ap5BOzOD8b5sBcmAe+3E3yt+A23IG7cA/ugw07P8K6dthe8eWic8Y9u7NpnR8n8HsSTkU8W+fa/zEwH0cLYGHGVSdrF3TDe+iBD5BPLOL8YlgCS2EZ+HIt5FvhNbRBO3TAG7DRSk+EtEE7dMBbeGfWTvZd0J3JRZ/dWZvv4Wwa4xp+r8ONiOc0ush151U4Wg2VGVc/WH/CL+iFPuiHfGIt59fBetgAG8GX+0j+E3yGL/AVvsF3+CtG8gRFMASKYRgMN+sI9iVQmslFn91Zmx/F2TTGM/w+hxdRz2mUkePOVTiqhhq5ymFKH8uADMhAdgO/AWcqVqE=
+  </data>
+ </layer>
+ <layer id="14" name="Слой тайлов 6" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt2ctOFEEYhuFeYcSFS2MMV6DRvXEjcA/iIXHtwmOC3ouwApWoN+ABAt6AB4y61oDo3hgjoLwdrKTypybEGZKhu99KPnqqqoeZeroqPTVTVRYFFFBAAQUUUEABBRRQQAEFFFBAAQUUUEABBRRQQAEFFFBAAQUUUEABBRRQQAEFFFBAAQUUUEABBRRQQAEFFFBAAQUUUECBpgqcP1pV42SCWBRom8DyaFWtkHSM41ukb4mkEusXWBdT5KLrIxF5bJHAGnN/naRjHNpn+r5k6yPWr7MubpCbro9IZ70FAoePVNUoScc4pBH6DpFUYj21e1SgTQI/uCdMM+9PkzPZ8V62Fur+k+RU1pbq9Xl3SX5+m3wcS3cFjjGvj5P7ZIbMhsdJJu8vtaXnpj6PCjRdoF4b58ggpddefpD/6XMVGLZAXBv9zvNee/lhj8/XV6BfgbOF+0a/87zXXr7f9+bzFBi2wNXCZ6r/nedxT/+TPf6v7LvfYY/R11dgvwTy767qeb5XKe3pT7DmxohrZC89+5smkH83leb5HL/xzZMH5CF5ROoS9y27rbt/xzu8Rh7j84Q8JSW7UtvCP9Pc0McHX6Ce55PkOdfvBXlJFkm+b6nvOaXfPNIaOfij3N93uIzPCnlFnpFoV2pb4jxLMwWuMf/fcP3ekndkleT7lvyeE0eY1ldsb3P9Az4fySfymkS7Utt7zrM0U2CNa7dOvpIN8o3k5RL1y+RKaE/n1Ourq6VkV2r73sOuq25NGvdvrt0m2SLb5A/Jyy3qt8md0J6f09XHJbtS21/tujpFHLcCCigwsMAOgLuMqA==
+  </data>
+ </layer>
+ <layer id="15" name="Слой тайлов 7" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt08ENgDAMA8Bs0P1HoB0COkRhHfztBgidJT/yPcVVQoAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEvitwtKqejlQIENgFzuziSqd97DAuAhFY2cWdPvbhHwgQIECAAAECBAgQIECAAAECBH4k8AKIPgdI
+  </data>
+ </layer>
+ <layer id="16" name="Слой тайлов 8" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt07ERgDAMA0BvkP1HIBkCMkRgHdRmARpedyrc/llVQoAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBD4RuBoVT0dqRAgsAuc2cWVTvvYYVwEIrCyizt97MM/ECBAgAABAgQIECBAgAABAgQIECBAgAABAj8XeAEGsAdI
+  </data>
+ </layer>
+ <layer id="17" name="Слой тайлов 9" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt07ERwCAMA0BvkP1HgAwRGIJknailpH/dqXD7Z1UJAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAgXOBdlX19E6FAIFd4MkuRjrtY4dxEYjAyi7e9LMP/0CAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBI4FfoUTB0g=
+  </data>
+ </layer>
+ <layer id="18" name="Слой тайлов 10" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHtl8FNBDEMRXMHCWgFigEh6AQO0A1QBHCBCoB2SA6WrI8njjksYvVGimI7P3b2ydndaY0HAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAABCEAAAhCAAAQgAAEIQAACEIAABCAAAQhAAAIQgAAEIAABCEDgNwTOD1q76OMyGFc9dt0HDwT2jUDU7yOmPX/TY7cbd+Cux+831vaNF5/n/xOIvuu137NPqT3/1vv/feMOzNayOqxDYNcEou967ffsTNrz6vv9szWvw4bALgnYfyP7vbDaUb9GMdNHs+rV93tma16HDYG/IKC/F1G/RrHZWVWvvt87W/M6bAjsgoD2Y+aPM6kmO6fq1ff7o7WHo9Ye+3jqgwcCKwRO+/vt2cY77sp+02g/Zv7YpxrLtTWrXn2/L1p77vfipY9X7odHhT0hoO8JE+mPfvY96O2RI/Mjzax2pNcafn+09tHvxWcfX9wPjwp7QkDfEybSac9rP2b+qKOaWe1IP9s/W8vqsA4BI1DpI9V639sjd+ZHGjvT1ryS0/aq1uLMEKgQqPSRar3v7VE/8yNNdu6VnJZDtRZnhkCFQKWPVOt9b4/6mR9psnOv5LQcqrU4MwQqBCp9pFrve3vUz/xIk517JaflUK3FmSFQIVDpI9V639ujfuZHmuzcKzkth2otzgyBCoFKH6nW+94e9TM/0mTnXslpOVRrcWYIVAhU+ki13vf2qJ/5kSY790pOy6FaizNDoEKg0keq9b63R/3MjzTZuVdyWg7VWpwZAhUCx4etnfSx8qjW+94euTI/0mRnWMlpOVRrcWYIQAACEIDArgh8A+0x7TI=
+  </data>
+ </layer>
+ <layer id="19" name="Слой тайлов 11" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt2UtKA0EQxvHeK6inU0RvYhZ6FJ+oF9CoqBvd+US9gM8r+P5cBMLEbicVuyZ0/gMfkUyS6vlNFR1JCBwIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIDA3wLTYyHMKBwIINArsKDZaDEfvTA8g4AETjQbp8wHvVCYQPV70Zx6fN7Q5znnY3MihC1lW+FAwFOg+r1oUbOxNGTzcai5OFKOmQ/P1hiZWp09YlZ9/xPrHpECy7l/3GgubpU75iN1CzhnFPivPSJVPud8pOpyDoGUQGdPqD7m2CNS62A+UjqcGzYB6/8R1utgPqxyvK8JAe9+9a7XhCk1yxHw7lfveuXcKa6kCQHvfvWu14QpNcsR8O5X73rl3CmuJKfAsn4TWFFWlTVlXdlQvPvVUi+29pxefPZoCexoFnaVtrKn7CsHiqVfB5Gz1IutfZB18F4EugXONAvnyoVyqVwp14qlX7s/t9+/LfVia++3Nq9HICZwr1l4UB6VJ+VZeVEs/RqrUed5S73Y2uvU4zUI1BF41Sy8Ke/Kh/KpfCmT4yFMKV6HpV5s7V5rpg4CCCCAAAK/CXwD4DlwHQ==
+  </data>
+ </layer>
+ <layer id="20" name="Слой тайлов 12" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt08ENgDAMA8Bs0P1HoB0COkRhHfztBgidJT/yPcVVQoAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECHxV4GhVPR2pECCwC5zZxZVO+9hhXAQisLKLO33swz8QIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBH4l8AIAWgdI
+  </data>
+ </layer>
+ <layer id="21" name="Слой тайлов 13" width="200" height="36">
+  <data encoding="base64" compression="zlib">
+   eAHt07ERgDAMA0BvkP1HIBkCMkRgHdRmARpedyrc/llVQoAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAg8IXA0ap6OlIhQGAXOLOLK532scO4CERgZRd3+tiHfyBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAr8XeAF+vQdI
   </data>
  </layer>
  <objectgroup color="#55ffff" id="9" name="Triggers" visible="0">
@@ -141,6 +186,241 @@
     <property name="reverse" value="yes"/>
    </properties>
   </object>
+  <object id="159" x="1760" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="160" x="1920" y="1056" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="161" x="2337" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="162" x="2517" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="163" x="2260" y="1048" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="164" x="2437" y="1055" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="165" x="2587" y="1049" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="166" x="3328" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="167" x="2912" y="864" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="168" x="3168" y="864" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="169" x="3040" y="832" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="170" x="2962" y="1054.67" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="171" x="3504.67" y="1050.67" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="172" x="3270" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="173" x="3196.67" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="174" x="3128.67" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="175" x="3059.33" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="195" x="3369.5" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="196" x="3420" y="1017" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="197" x="4375" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="198" x="4455" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="199" x="4513" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="200" x="4596" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="201" x="4679" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="204" x="4851" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="205" x="4943" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="206" x="5030" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="207" x="5124" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="209" x="5288" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="210" x="5365" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="211" x="5481" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="212" x="5567" y="1018" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="213" x="4320" y="1056" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="214" x="4759.33" y="1055.33" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="215" x="5206" y="1055.33" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="216" x="5624.67" y="1059.33" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="217" x="5284" y="446.667" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="218" x="5408" y="448" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="219" x="4992" y="480" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="220" x="5634.67" y="413.333" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="221" x="5728" y="416" width="32" height="32">
+   <properties>
+    <property name="enemy" value="yes"/>
+   </properties>
+  </object>
+  <object id="222" x="5853.33" y="441.333" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="223" x="5557.33" y="446.667" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="224" x="5477.33" y="486.667" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="225" x="5205.33" y="481.333" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="226" x="5081.33" y="509.333" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
+  <object id="227" x="4876" y="512" width="32" height="32">
+   <properties>
+    <property name="reverse" value="yes"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#00ff00" id="2" name="Blocking" visible="0">
   <object id="13" name="Земля" x="0" y="1082" width="6400" height="65">
@@ -223,12 +503,377 @@
     <property name="blockers" value="tblr"/>
    </properties>
   </object>
-  <object id="77" x="608" y="1017.85" width="145.667" height="70.1515">
+  <object id="77" x="615.333" y="1022.52" width="138.333" height="65.4848">
    <properties>
     <property name="blockers" value="tblr"/>
    </properties>
   </object>
-  <object id="79" x="642.03" y="952.212" width="77.9697" height="67.1212">
+  <object id="79" x="650.364" y="952.212" width="69.6364" height="70.4545">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="96" x="2112" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="97" x="2208" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="98" x="2139.5" y="1036" width="73.5" height="64.5">
+   <properties>
+    <property name="blockers" value="tble Die"/>
+   </properties>
+  </object>
+  <object id="99" x="3552" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="100" x="3648" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="101" x="3579.5" y="1036" width="73.5" height="64.5">
+   <properties>
+    <property name="blockers" value="tble Die"/>
+   </properties>
+  </object>
+  <object id="104" x="1984" y="1033" width="32" height="55">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="105" x="2633" y="1022" width="137" height="57">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="106" x="2668" y="955" width="67" height="66">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="108" x="2793" y="1021.5" width="136.5" height="59">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="109" x="2827.5" y="957" width="68.5" height="61.5">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="110" x="2944" y="896" width="224" height="24">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="111" x="3233.2" y="874.155" width="11.8394" height="20.375">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="112" x="3245.07" y="860.118" width="16.1186" height="16.1477">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="113" x="3322.45" y="775.827" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="114" x="3338.45" y="761.764" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="115" x="3354.39" y="743.837" width="16.2253" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="116" x="3370.46" y="731.84" width="19.9882" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="117" x="3390.47" y="723" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="118" x="3263.03" y="843.032" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="119" x="3279.03" y="828.969" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="120" x="3293.69" y="811.032" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="121" x="3309.69" y="796.969" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="122" x="3487.17" y="724" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="123" x="3649" y="723.782" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="124" x="3808.5" y="723.782" width="157.998" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="125" x="3807.5" y="883.782" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="126" x="3360" y="917.282" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="129" x="3455.44" y="924" width="20.5" height="20">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="131" x="3474.36" y="934.909" width="14.9091" height="20.9091">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="133" x="3488.73" y="955.636" width="18.5455" height="20.3636">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="134" x="3502" y="967.818" width="17.8182" height="20.1818">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="135" x="3519.82" y="987.636" width="18.1818" height="20.7273">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="136" x="3532" y="1001.82" width="17.4545" height="18.1818">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="139" x="3740.13" y="936.642" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="140" x="3756.13" y="922.579" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="141" x="3772.07" y="904.652" width="16.2253" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="142" x="3788.14" y="892.655" width="19.9882" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="143" x="3680.71" y="1003.85" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="144" x="3694.46" y="987.534" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="145" x="3711.12" y="970.597" width="16.0079" height="26">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="146" x="3725.87" y="955.534" width="15.9447" height="29.2727">
+   <properties>
+    <property name="blockers" value="tl"/>
+   </properties>
+  </object>
+  <object id="147" x="3775.5" y="979.782" width="95.9981" height="32.4357">
+   <properties>
+    <property name="blockers" value="tlbr"/>
+   </properties>
+  </object>
+  <object id="148" x="3808.5" y="1033" width="31" height="57">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="149" x="3902.63" y="892.999" width="20.5" height="20">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="150" x="3921.55" y="903.908" width="14.9091" height="20.9091">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="151" x="3935.74" y="924.09" width="18.5455" height="20.3636">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="152" x="3950.83" y="937.181" width="17.8182" height="20.1818">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="153" x="3967.55" y="954.09" width="18.1818" height="20.7273">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="154" x="3982.1" y="969.365" width="17.4545" height="18.1818">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="155" x="4000.73" y="985.455" width="16.3636" height="21.6364">
+   <properties>
+    <property name="blockers" value="tr"/>
+   </properties>
+  </object>
+  <object id="156" x="4012.55" y="1001.45" width="21.8182" height="18.1818">
+   <properties>
+    <property name="blockers" value="tr"/>
+   </properties>
+  </object>
+  <object id="157" x="4030.67" y="1016" width="19" height="22.3333">
+   <properties>
+    <property name="blockers" value="t"/>
+   </properties>
+  </object>
+  <object id="158" x="4043.33" y="1031.33" width="19.3333" height="20">
+   <properties>
+    <property name="blockers" value="t"/>
+   </properties>
+  </object>
+  <object id="176" x="4064" y="736" width="320" height="32">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="177" x="4416" y="672" width="192" height="32">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="178" x="4160" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="179" x="4256" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="180" x="4187.5" y="1036" width="73.5" height="64.5">
+   <properties>
+    <property name="blockers" value="tble Die"/>
+   </properties>
+  </object>
+  <object id="181" x="5664" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="182" x="5760" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="183" x="5691.5" y="1036" width="73.5" height="64.5">
+   <properties>
+    <property name="blockers" value="tble Die"/>
+   </properties>
+  </object>
+  <object id="184" x="6080" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="185" x="6176" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="186" x="6107.5" y="1036" width="73.5" height="64.5">
+   <properties>
+    <property name="blockers" value="tble Die"/>
+   </properties>
+  </object>
+  <object id="187" x="6240" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="188" x="6336" y="1024" width="32" height="64">
+   <properties>
+    <property name="blockers" value="tble"/>
+   </properties>
+  </object>
+  <object id="189" x="6267.5" y="1036" width="73.5" height="64.5">
+   <properties>
+    <property name="blockers" value="tble Win"/>
+   </properties>
+  </object>
+  <object id="190" x="5961.33" y="510.667" width="68.6667" height="592.667">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="191" x="5568" y="480" width="288" height="32">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="192" x="5216" y="512" width="288" height="32">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="193" x="4896" y="544" width="224" height="32">
+   <properties>
+    <property name="blockers" value="tblr"/>
+   </properties>
+  </object>
+  <object id="194" x="4640" y="608" width="192" height="32">
    <properties>
     <property name="blockers" value="tblr"/>
    </properties>
