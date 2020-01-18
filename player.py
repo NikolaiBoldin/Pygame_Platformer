@@ -69,11 +69,11 @@ class Player(sprite.Sprite):
         # звуки
         self.jump_sound = mixer.Sound('data/sounds/gruntJumpFemale.wav')  # звук прыжка
         self.run_sound = mixer.Sound('data/sounds/footstepsTurn.wav')  # звук бега
-        self.enemy_punch = mixer.Sound('data/sounds/wooosh.wav')  # звук удара врага
+        # self.enemy_punch = mixer.Sound('data/sounds/wooosh.wav')  # звук удара врага
         self.take_damage = mixer.Sound('data/sounds/splatFemale.wav')  # звук получения урона
         self.jump_sound.set_volume(0.1)
-        self.run_sound.set_volume(0.1)
-        self.take_damage.set_volume(0.3)
+        self.run_sound.set_volume(0.3)
+        self.take_damage.set_volume(0.2)
 
         self.left_MouseButton = False  # нажата ли ЛКМ?
         self.Space_click = False
@@ -136,6 +136,8 @@ class Player(sprite.Sprite):
                                         self.image = self.frames_right['move'][self.frame_number_MOVE]
                                     else:
                                         self.image = self.frames_left['move'][self.frame_number_MOVE]
+                                    if self.frame_number_MOVE == 0 or self.frame_number_MOVE==4:
+                                        self.run_sound.play()
                                     self.frame_number_MOVE = (self.frame_number_MOVE + 1) % len(
                                         self.frames_left['move'])
                                     self.timer_of_update = 0
@@ -178,7 +180,6 @@ class Player(sprite.Sprite):
             if keys[K_a] and not keys[K_d] and not self.is_stun and not self.is_SpellCast:
                 self.rect.x -= 7
                 self.mask_for_platform.x -= 7
-                self.run_sound.play()
                 if not self.is_move:  # начало анимации движения
                     self.is_move = True
                     self.timer_of_update = 0
@@ -190,7 +191,6 @@ class Player(sprite.Sprite):
             if keys[K_d] and not keys[K_a] and not self.is_stun and not self.is_SpellCast:
                 self.rect.x += 7
                 self.mask_for_platform.x += 7
-                self.run_sound.play()
                 if not self.is_move:  # начало анимации движения
                     self.is_move = True
                     self.timer_of_update = 0
@@ -329,7 +329,7 @@ class Player(sprite.Sprite):
                     self.is_stun = True
                     self.is_SpellCast = False
                     self.HP -= enemy.damege
-                    self.enemy_punch.play()
+                    # self.enemy_punch.play()
                     if self.HP <= 0:
                         self.HP = 0
                         self.is_dead = True
@@ -409,6 +409,7 @@ class FireBall(sprite.Sprite):
                 enemy.HP -= self.damage
                 self.is_collision = True
                 enemy.is_hit = True
+
             if self.is_collision:
                 self.rect.move(-15, -15)
                 self.rect.width = 96

@@ -820,7 +820,7 @@
   </object>
   <object id="183" x="5691.5" y="1036" width="73.5" height="64.5">
    <properties>
-    <property name="blockers" value="tble Die"/>
+    <property name="blockers" value="tble Win"/>
    </properties>
   </object>
   <object id="184" x="6080" y="1024" width="32" height="64">
@@ -850,7 +850,7 @@
   </object>
   <object id="189" x="6267.5" y="1036" width="73.5" height="64.5">
    <properties>
-    <property name="blockers" value="tble Win"/>
+    <property name="blockers" value="tble Die"/>
    </properties>
   </object>
   <object id="190" x="5961.33" y="510.667" width="68.6667" height="592.667">

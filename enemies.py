@@ -26,6 +26,10 @@ class Skeleton(sprite.Sprite):
         self.frame_number_HIT = 0  # номера кадров
         self.frame_number_DEAD = 0
         self.frame_number_WALK = 0
+        self.sound_of_death = mixer.Sound('data/sounds/dead.wav')  # звук получения урона
+        self.sound_of_death.set_volume(0.1)
+        self.sound_of_hit = mixer.Sound('data/sounds/рык.wav')
+        self.sound_of_hit.set_volume(0.2)
 
     def set_frame(self, dt):
         self.timer_of_update += dt
@@ -37,6 +41,8 @@ class Skeleton(sprite.Sprite):
                     self.image = self.frames_right['dead'][self.frame_number_DEAD]
                 else:
                     self.image = self.frames_left['dead'][self.frame_number_DEAD]
+                if self.frame_number_DEAD == 3:
+                    self.sound_of_death.play()
                 self.frame_number_DEAD = (self.frame_number_DEAD + 1) % len(self.frames_right['dead'])
                 if self.frame_number_DEAD == 0:
                     self.kill()
@@ -47,6 +53,8 @@ class Skeleton(sprite.Sprite):
                         self.image = self.frames_right['hit'][self.frame_number_HIT]
                     else:
                         self.image = self.frames_left['hit'][self.frame_number_HIT]
+                    if self.frame_number_HIT == 1:
+                        self.sound_of_hit.play()
                     self.frame_number_HIT = (self.frame_number_HIT + 1) % len(self.frames_right['hit'])
                     if self.frame_number_HIT == 0:
                         self.is_hit = False
@@ -65,7 +73,7 @@ class Skeleton(sprite.Sprite):
             self.rect.x += self.direction * 1
         for cell in game.tile_map.layers['Triggers'].collide(self.rect, 'reverse'):
             if self.direction == 1:
-                self.rect.right = cell.left
+                self.rect.right = cell.left - 1
             else:
                 self.rect.left = cell.right
             self.direction *= -1
@@ -94,7 +102,7 @@ class Enemy(sprite.Sprite):
         self.mask = mask.from_surface(self.image)
         self.damege = 30
         self.stun = 1
-        self.HP = 10
+        self.HP = 60
         self.update_rate = 0.15  # скорость обновления анимации в секунадх
         self.timer_of_update = 0  # таймер обновлений
         self.frame_number_IDLE = 0  # номера кадров

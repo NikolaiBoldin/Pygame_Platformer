@@ -274,6 +274,9 @@ class Game:
         timer_of_text1 = 0
         timer_of_text2 = 0
         my_font = font.Font('data/fonts/17810.ttf', 20)
+        pygame.mixer.music.load('data/sounds/rpg_village02_loop.mp3')
+        pygame.mixer.music.set_volume(0.25)
+        pygame.mixer.music.play(-1)
         while not self.win1:
             dt = clock.tick(self.fps)  # задержка игрового цикла
             self.player.left_MouseButton = False
@@ -368,6 +371,8 @@ class Game:
         #     Boss((bos.px, bos.py), self.boss)
         # self.tile_map.layers.append(self.boss)
         my_font = font.Font('data/fonts/17810.ttf', 20)
+        pygame.mixer.music.load('data/sounds/black-swamp_zy5g-mvd.mp3')
+        pygame.mixer.music.play(-1)
         while 1:
             dt = clock.tick(self.fps)  # задержка игрового цикла
             self.player.left_MouseButton = False
