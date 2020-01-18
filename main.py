@@ -352,13 +352,13 @@ class Game:
         self.player = None
         self.sprites = tmx.SpriteLayer()
         self.player = Player((start_cell.px, start_cell.py), self.sprites)
-        self.player.abilities = [True,True,False]
+        self.player.abilities = [True, True, False]
         self.tile_map.layers.append(self.sprites)
-        self.enemies= tmx.SpriteLayer()
+        self.enemies = tmx.SpriteLayer()
         for enemy in self.tile_map.layers['Triggers'].find('enemy'):
             Enemy((enemy.px, enemy.py), self.enemies)
         self.tile_map.layers.append(self.enemies)
-        self.books=tmx.SpriteLayer()
+        self.books = tmx.SpriteLayer()
         for book in self.tile_map.layers['Triggers'].find('book'):
             Book((book.px, book.py), book['book'], self.books)
         self.tile_map.layers.append(self.books)
@@ -403,7 +403,8 @@ class Game:
                             ((0, 0), (self.size_bar[0] - self.offset_stamina, self.size_bar[1])))
                 if self.player.abilities[2] and timer_of_text0 < 3:
                     timer_of_text0 += dt / 1000
-                    string_rendered = my_font.render(u'Вы научились летать! Зажмите пробел в прыжке', 1, (220, 220, 220))
+                    string_rendered = my_font.render(u'Вы научились летать! Зажмите пробел в прыжке', 1,
+                                                     (220, 220, 220))
                     screen.blit(string_rendered, (10, 120))
             else:
                 if not self.is_GameOver:
